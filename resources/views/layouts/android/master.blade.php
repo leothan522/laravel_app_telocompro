@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ config('app.name') }} | @yield('title', 'Pagina')</title>
+    <title>{{ config('app.name') }} | @yield('title', 'Android')</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -64,11 +64,21 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 
+{{--
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
 </script>
+--}}
+{{--
+<script>
+    $(document).ready(function () {
+        $('div.alert').not('.alert-important').delay(5000).fadeOut(350);
+    })
+</script>
+--}}
+
 
 @yield('script')
 </body>

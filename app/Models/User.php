@@ -66,4 +66,9 @@ class User extends Authenticatable
         return $query->where('name', 'LIKE', "%$name%");
     }
 
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class, 'users_id', 'id');
+    }
+
 }

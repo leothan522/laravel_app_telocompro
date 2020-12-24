@@ -39,9 +39,11 @@ Route::get('/perfil', function () {
 
 
 //*************************************************** Rutas App Android
-Route::prefix('/android')->group(function (){
+Route::middleware('android')->prefix('/android')->group(function (){
 
-    Route::get('/usuarios', 'Android\AppController@usuariosRegistrados')->name('android.usuarios');
+    Route::get('/facturacion-envio/{id}', 'Android\AppController@getFacturacionEnvio')->name('android.get_facturacion');
+    Route::post('/facturacion-envio/{id}', 'Android\AppController@postFacturacionEnvio')->name('android.post_facturacion');
+    Route::get('/escritorio/{id}', 'Android\AppController@getEscritorio')->name('android.get_escritorio');
 
 });
 
