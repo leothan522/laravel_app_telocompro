@@ -90,5 +90,25 @@ class AppController extends Controller
             ->with('user', $user);
     }
 
+    public function shopGrid()
+    {
+        return view('android.ogani.shop-grid');
+    }
+
+    public function shopdetails()
+    {
+        return view('android.ogani.shop-details');
+    }
+
+    public function shopCart()
+    {
+        return view('android.ogani.shoping-cart');
+    }
+
+    public function shopCheckout()
+    {
+        return view('android.ogani.checkout');
+    }
+
 
 }

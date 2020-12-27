@@ -45,6 +45,12 @@ Route::middleware('android')->prefix('/android')->group(function (){
     Route::post('/facturacion-envio/{id}', 'Android\AppController@postFacturacionEnvio')->name('android.post_facturacion');
     Route::get('/escritorio/{id}', 'Android\AppController@getEscritorio')->name('android.get_escritorio');
 
+    //Plantilla Ogani
+    Route::get('/shop/grid/', 'Android\AppController@shopGrid')->name('android.shop_grid');
+    Route::get('/shop/details/', 'Android\AppController@shopDetails')->name('android.shop_detail');
+    Route::get('/shop/cart/', 'Android\AppController@shopCart')->name('android.shop_cart');
+    Route::get('/shop/checkout/', 'Android\AppController@shopCheckout')->name('android.shop_checkout');
+
 });
 
 
