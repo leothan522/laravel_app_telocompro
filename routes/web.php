@@ -41,8 +41,8 @@ Route::get('/perfil', function () {
 //*************************************************** Rutas App Android
 Route::middleware('android')->prefix('/android')->group(function (){
 
-    Route::get('/facturacion-envio/{id}', 'Android\AppController@getFacturacionEnvio')->name('android.get_facturacion');
-    Route::post('/facturacion-envio/{id}', 'Android\AppController@postFacturacionEnvio')->name('android.post_facturacion');
+    Route::get('/facturacion-envio/{id}', 'Android\FacturacionEnvioController@getFacturacionEnvio')->name('android.get_facturacion');
+    Route::post('/facturacion-envio/{id}', 'Android\FacturacionEnvioController@postFacturacionEnvio')->name('android.post_facturacion');
     Route::get('/escritorio/{id}', 'Android\AppController@getEscritorio')->name('android.get_escritorio');
 
     //Plantilla Ogani

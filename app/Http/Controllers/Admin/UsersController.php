@@ -23,8 +23,8 @@ class UsersController extends Controller
         $clave = Str::random(8);
         $users = User::buscar($request->buscar)->orderBy('id', 'DESC')->paginate(30);
         $todos = User::count();
-        $administrador = User::where('role', 1)->count();
-        $gestor = User::where('role', 2)->count();
+        $administrador = User::where('role', 2)->count();
+        $gestor = User::where('role', 1)->count();
         $cliente = User::where('role', 0)->count();
         return view('admin.usuarios.index')
             ->with('users', $users)
@@ -128,14 +128,19 @@ class UsersController extends Controller
 
                 $permisos = [
                     'usuarios.index' => $request->input('usuarios_index'),
+                    'usuarios.role' => $request->input('usuarios_index'),
                     'usuarios.create' => $request->input('usuarios_create'),
                     'usuarios.store' => $request->input('usuarios_store'),
                     'usuarios.status' => $request->input('usuarios_status'),
                     'usuarios.editar' => $request->input('usuarios_editar'),
                     'usuarios.clave' => $request->input('usuarios_clave'),
-                    'usuarios.edit' => $request->input('usuarios_edit')
+                    'usuarios.edit' => $request->input('usuarios_edit'),
+                    'clientes.index' => $request->input('clientes_index'),
+                    'clientes.show' => $request->input('clientes_index'),
+                    'clientes.edit' => $request->input('clientes_edit'),
+                    'clientes.update' => $request->input('clientes_edit'),
                 ];
-                //******************************************** configuracion SIDEBAR
+                //******************************************** Usuarios SIDEBAR
                 if ($permisos['usuarios.index']) {
                     $permisos['configuracion'] = "true";
                 } else {
@@ -152,6 +157,13 @@ class UsersController extends Controller
                 //******************************************** Permisos de Usuario
                 if ($permisos['usuarios.edit']) {
                     $permisos['usuarios.update'] = "true";
+                }
+
+                //******************************************** E-commerce SIDEBAR
+                if ($permisos['clientes.index']){
+                    $permisos['e-commerce'] = "true";
+                }else{
+                    $permisos['e-commerce'] = null;
                 }
 
                 $permisos = json_encode($permisos);
@@ -238,8 +250,8 @@ class UsersController extends Controller
         $clave = Str::random(8);
         $users = User::where('role', $role)->orderBy('id', 'DESC')->paginate(30);
         $todos = User::count();
-        $administrador = User::where('role', 1)->count();
-        $gestor = User::where('role', 2)->count();
+        $administrador = User::where('role', 2)->count();
+        $gestor = User::where('role', 1)->count();
         $cliente = User::where('role', 0)->count();
         if (is_numeric($role) && $role >= 0 && $role <= 2){
             return view('admin.usuarios.index')

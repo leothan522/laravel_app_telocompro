@@ -19,8 +19,11 @@ Route::middleware(['auth', 'user.status', 'isadmin'])->prefix('/admin')->group(f
 
     Route::middleware('user.permisos')->group(function (){
 
+        //USuarios
         Route::resource('/usuarios', 'Admin\UsersController');
         Route::get('/usuarios/rol/{role}', 'Admin\UsersController@role')->name('usuarios.role');
+        //Clientes
+        Route::resource('/clientes', 'Admin\ClientesController');
 
     });
 

@@ -132,13 +132,13 @@
                                 @else
                                 <li class="breadcrumb-item active">Todos ({{ cerosIzquierda($todos) }})</li>
                             @endif
-                            @if ($role != 1)
-                                <li class="breadcrumb-item"><a href="{{ route('usuarios.role', 1) }}">Administrador <span class="text-muted">({{ cerosIzquierda($administrador) }})</span></a></li>
+                            @if ($role != 2)
+                                <li class="breadcrumb-item"><a href="{{ route('usuarios.role', 2) }}">Administrador <span class="text-muted">({{ cerosIzquierda($administrador) }})</span></a></li>
                                 @else
                                 <li class="breadcrumb-item active">Administrador <span class="text-muted">({{ cerosIzquierda($administrador) }})</span></li>
                             @endif
-                            @if ($role != 2)
-                                <li class="breadcrumb-item"><a href="{{ route('usuarios.role', 2) }}">Gestor de Tienda <span class="text-muted">({{ cerosIzquierda($gestor) }})</span></a></li>
+                            @if ($role != 1)
+                                <li class="breadcrumb-item"><a href="{{ route('usuarios.role', 1) }}">Gestor de Tienda <span class="text-muted">({{ cerosIzquierda($gestor) }})</span></a></li>
                                 @else
                                 <li class="breadcrumb-item active">Gestor de Tienda <span class="text-muted">({{ cerosIzquierda($gestor) }})</span></li>
                             @endif

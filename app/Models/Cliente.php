@@ -11,8 +11,14 @@ class Cliente extends Model
     protected $table = "clientes";
     protected $fillable = [
         'cedula', 'nombre', 'apellidos', 'telefono', 'direccion_1', 'direccion_2', 'localidad',
-        'codigo_postal', 'estados_id', 'municipios_id', 'parroquias_id', 'users_id'
+        'codigo_postal', 'estados_id', 'municipios_id', 'parroquias_id', 'num_pedidos', 'gasto_bs', 'gasto_dolar',
+        'ultima_compra', 'users_id'
     ];
+
+    public function scopeBuscar($query, $cedula)
+    {
+        return $query->where('cedula', 'LIKE', "%$cedula%");
+    }
 
     public function usuario()
     {

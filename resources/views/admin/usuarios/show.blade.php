@@ -42,7 +42,7 @@
 
                         <h3 class="profile-username text-center">{{ $user->name }}</h3>
 
-                        <p class="text-muted text-center">{!! iconoPlataforma($user->plataforma) !!}</p>
+                        <p class="text-muted text-center">{!! iconoPlataforma($user->plataforma) !!} <small>ID Usuario: {{ $user->id }}</small></p>
 
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
@@ -61,9 +61,10 @@
 
                         {!! Form::open(['route' => ['usuarios.update', $user->id], 'method' => 'PUT']) !!}
                         <input type="hidden" name="mod" value="status">
-                        @if ((leerJson(Auth::user()->permisos, 'usuarios.status') &&
-                            ($user->id != Auth::user()->id) ||
-                            Auth::user()->role == 100))
+                        @if ((leerJson(Auth::user()->permisos, 'usuarios.status')
+                            && ($user->id != Auth::user()->id)
+                            && ($user->role <= Auth::user()->role)
+                            || Auth::user()->role == 100))
                             @if ($user->status > 0)
                                 <button type="submit" class="btn btn-danger btn-block"><b>Suspender Usuario</b></button>
                             @else

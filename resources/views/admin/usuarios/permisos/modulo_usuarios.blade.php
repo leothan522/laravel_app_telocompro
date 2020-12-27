@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-md-12">
     <div class="card card-purple">
         <div class="card-header">
             <h5 class="card-title">Usuarios</h5>

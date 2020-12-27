@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="email">Dirección de la calle</label>
+                <label for="email">Dirección de envio</label>
                 <div class="input-group mb-3">
                     {{--<div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>

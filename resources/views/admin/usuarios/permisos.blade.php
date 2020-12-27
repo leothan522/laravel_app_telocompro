@@ -55,7 +55,19 @@
         {!! Form::open(['route' => ['usuarios.update', $user->id], 'method' => 'PUT']) !!}
         <div class="row justify-content-center">
             @if ($user->role > 0)
-                @include('admin.usuarios.permisos.modulo_usuarios')
+                <div class="col-md-3">
+                    <label class="col-md-12">E-commerce</label>
+                    @include('admin.usuarios.permisos.modulo_clientes')
+                </div>
+                <div class="col-md-3">
+                    <label class="col-md-12">Productos</label>
+
+                </div>
+                <div class="col-md-3">
+                    <label class="col-md-12">Usuarios</label>
+                    @include('admin.usuarios.permisos.modulo_usuarios')
+                </div>
+
                 @else
                 @include('admin.usuarios.permisos.blanco')
             @endif

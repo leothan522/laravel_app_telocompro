@@ -21,7 +21,7 @@ class UserPermisos
         if (leerJson(Auth::user()->permisos, Route::currentRouteName()) == true || Auth::user()->role == 100){
             return $next($request);
         }else{
-            return redirect()->route('dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
     }

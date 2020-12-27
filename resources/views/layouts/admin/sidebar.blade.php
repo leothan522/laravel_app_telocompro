@@ -26,8 +26,9 @@
                     </p>
                 </a>
             </li>
-            <li class="nav-item has-treeview lko-">
-                <a href="#" class="nav-link lkm-">
+            @if (leerJson(Auth::user()->permisos, 'e-commerce') || Auth::user()->role == 100)
+            <li class="nav-item has-treeview lko-clientes.index">
+                <a href="#" class="nav-link lkm-clientes.index">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
                         E-commerce
@@ -42,14 +43,16 @@
                         </a>
                     </li>
                 </ul>
+                @if (leerJson(Auth::user()->permisos, 'clientes.index') || Auth::user()->role == 100)
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link lk-">
-                            <i class="fa fa-user nav-icon"></i>
+                        <a href="{{ route('clientes.index') }}" class="nav-link lk-clientes.index">
+                            <i class="fa fa-child nav-icon"></i>
                             <p>Clientes</p>
                         </a>
                     </li>
                 </ul>
+                @endif
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="#" class="nav-link lk-">
@@ -67,7 +70,9 @@
                     </li>
                 </ul>
 
-            </li><li class="nav-item has-treeview lko-">
+            </li>
+            @endif
+            <li class="nav-item has-treeview lko-">
                 <a href="#" class="nav-link lkm-">
                     <i class="nav-icon fas fa-th-large"></i>
                     <p>

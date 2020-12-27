@@ -19,8 +19,8 @@ function status($i){
 function role($i = null){
     $status = [
         '0'     => 'Cliente',
-        '2'     => 'Gestor de Tienda',
-        '1'     => 'Administrador',
+        '1'     => 'Gestor de Tienda',
+        '2'     => 'Administrador',
         '100'   => 'Root'
     ];
     if (is_null($i)){
@@ -33,7 +33,12 @@ function role($i = null){
 
 function haceCuanto($fecha){
     $carbon = new Carbon();
-    return $carbon->parse($fecha)->diffForHumans();
+    if ($fecha != null){
+        return $carbon->parse($fecha)->diffForHumans();
+    }else{
+        return "-";
+    }
+
 }
 
 function iconoPlataforma($plataforma){
