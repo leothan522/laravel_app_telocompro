@@ -16,6 +16,63 @@
 CREATE DATABASE IF NOT EXISTS `laravel-app` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
 USE `laravel-app`;
 
+-- Volcando estructura para tabla laravel-app.categorias
+CREATE TABLE IF NOT EXISTS `categorias` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modulo` int(11) NOT NULL DEFAULT '0',
+  `file_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `num_productos` int(11) DEFAULT NULL,
+  `por_defecto` int(11) NOT NULL DEFAULT '0',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Volcando datos para la tabla laravel-app.categorias: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
+
+-- Volcando estructura para tabla laravel-app.clientes
+CREATE TABLE IF NOT EXISTS `clientes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellidos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion_1` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion_2` text COLLATE utf8mb4_unicode_ci,
+  `localidad` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_postal` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estados_id` bigint(20) unsigned DEFAULT NULL,
+  `municipios_id` bigint(20) unsigned DEFAULT NULL,
+  `parroquias_id` bigint(20) unsigned DEFAULT NULL,
+  `num_pedidos` int(11) DEFAULT NULL,
+  `gasto_bs` decimal(5,2) DEFAULT NULL,
+  `gasto_dolar` decimal(5,2) DEFAULT NULL,
+  `ultima_compra` date DEFAULT NULL,
+  `users_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `clientes_cedula_unique` (`cedula`),
+  KEY `clientes_users_id_foreign` (`users_id`),
+  KEY `clientes_estados_id_foreign` (`estados_id`),
+  KEY `clientes_municipios_id_foreign` (`municipios_id`),
+  KEY `clientes_parroquias_id_foreign` (`parroquias_id`),
+  CONSTRAINT `clientes_estados_id_foreign` FOREIGN KEY (`estados_id`) REFERENCES `estados` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `clientes_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `clientes_parroquias_id_foreign` FOREIGN KEY (`parroquias_id`) REFERENCES `parroquias` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `clientes_users_id_foreign` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Volcando datos para la tabla laravel-app.clientes: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
+
 -- Volcando estructura para tabla laravel-app.estados
 CREATE TABLE IF NOT EXISTS `estados` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -23,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `estados` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla laravel-app.estados: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `estados` DISABLE KEYS */;
@@ -83,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   PRIMARY KEY (`id`),
   KEY `municipios_estados_id_foreign` (`estados_id`),
   CONSTRAINT `municipios_estados_id_foreign` FOREIGN KEY (`estados_id`) REFERENCES `estados` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9999 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla laravel-app.municipios: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
@@ -533,6 +590,21 @@ INSERT INTO `municipios` (`id`, `nombre`, `estados_id`, `created_at`, `updated_a
 	(9998, 'EMBAJADA DE CHIPRE', 99, NULL, NULL);
 /*!40000 ALTER TABLE `municipios` ENABLE KEYS */;
 
+-- Volcando estructura para tabla laravel-app.parametros
+CREATE TABLE IF NOT EXISTS `parametros` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tabla_id` bigint(20) unsigned DEFAULT NULL,
+  `valor` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Volcando datos para la tabla laravel-app.parametros: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
+/*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
+
 -- Volcando estructura para tabla laravel-app.parroquias
 CREATE TABLE IF NOT EXISTS `parroquias` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -546,7 +618,7 @@ CREATE TABLE IF NOT EXISTS `parroquias` (
   KEY `parroquias_estados_id_foreign` (`estados_id`),
   CONSTRAINT `parroquias_estados_id_foreign` FOREIGN KEY (`estados_id`) REFERENCES `estados` (`id`) ON DELETE CASCADE,
   CONSTRAINT `parroquias_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=210511 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla laravel-app.parroquias: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parroquias` DISABLE KEYS */;
