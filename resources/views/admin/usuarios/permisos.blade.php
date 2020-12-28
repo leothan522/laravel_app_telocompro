@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-md-3">
                     <label class="col-md-12">Productos</label>
-
+                    @include('admin.usuarios.permisos.modulo_categorias')
                 </div>
                 <div class="col-md-3">
                     <label class="col-md-12">Usuarios</label>

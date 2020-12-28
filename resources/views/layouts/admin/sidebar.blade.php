@@ -72,8 +72,9 @@
 
             </li>
             @endif
-            <li class="nav-item has-treeview lko-">
-                <a href="#" class="nav-link lkm-">
+            @if (leerJson(Auth::user()->permisos, 'productos') || Auth::user()->role == 100)
+            <li class="nav-item has-treeview lko-categorias.index">
+                <a href="#" class="nav-link lkm-categorias.index">
                     <i class="nav-icon fas fa-th-large"></i>
                     <p>
                         Productos
@@ -96,16 +97,18 @@
                         </a>
                     </li>
                 </ul>
+                @if (leerJson(Auth::user()->permisos, 'categorias.index') || Auth::user()->role == 100)
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link lk-">
+                        <a href="{{ route('categorias.index') }}" class="nav-link lk-categorias.index">
                             <i class="fa fa-tags nav-icon"></i>
                             <p>Categorias</p>
                         </a>
                     </li>
                 </ul>
-
+                @endif
             </li>
+            @endif
             @if (leerJson(Auth::user()->permisos, 'configuracion') || Auth::user()->role == 100)
                 <li class="nav-item has-treeview lko-usuarios.index{{--menu-open--}}">
                 <a href="#" class="nav-link lkm-usuarios.index">

@@ -1,0 +1,173 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CategoriasRequest;
+use App\Models\Categoria;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+class CategoriasController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $categorias = Categoria::orderBy('nombre', 'ASC')->paginate(30);
+        $todas = Categoria::count();
+        $productos = Categoria::where('modulo', 0)->count();
+        $blog = Categoria::where('modulo', 1)->count();
+        return view('admin.categorias.index')
+            ->with('categorias', $categorias)
+            ->with('todas', $todas)
+            ->with('productos', $productos)
+            ->with('blog', $blog)
+            ->with('modulo', 100);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CategoriasRequest $request)
+    {
+        $path = "/img/categorias";
+        $file = $request->imagen;
+        if ($request->hasFile('imagen')){
+            $uploads = subirArchivos($file, $path);
+            $miniatura = crearMiniaturas($path, $uploads->getPathName(), $uploads->getFileName());
+        }
+
+        $categoria = new Categoria($request->all());
+        $categoria->nombre = e($request->nombre);
+        $categoria->slug = Str::slug($request->nombre);
+        $categoria->modulo = $request->modulo;
+        if ($request->hasFile('imagen')) {
+            $categoria->file_path = date('Y-m-d');
+            $categoria->imagen = $uploads->getFileName();
+        }
+        $categoria->save();
+
+        flash('Categoria Creada Correctamente', 'success')->important();
+        return back();
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $categoria = Categoria::findOrFail($id);
+        return view('admin.categorias.edit')
+            ->with('categoria', $categoria);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(CategoriasRequest $request, $id)
+    {
+        $categoria = Categoria::find($id);
+        $file_path = $categoria->file_path;
+        $file_name = $categoria->imagen;
+
+        $path = "/img/categorias";
+        $file = $request->imagen;
+        if ($request->hasFile('imagen')){
+            if (!is_null($file_name)){
+                $borrar_imagen = borrarArchivos($path, $file_path, $file_name);
+                $borrar_miniuatura = borrarArchivos($path, $file_path, 't_'.$file_name);
+            }
+            $uploads = subirArchivos($file, $path);
+            $miniatura = crearMiniaturas($path, $uploads->getPathName(), $uploads->getFileName());
+        }
+
+        $categoria->nombre = e($request->nombre);
+        $categoria->modulo = $request->modulo;
+        if ($request->hasFile('imagen')) {
+            $categoria->file_path = date('Y-m-d');
+            $categoria->imagen = $uploads->getFileName();
+        }
+        $categoria->update();
+
+        flash('Cambios Guardados Correctamente', 'primary')->important();
+        return back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $categoria = Categoria::find($id);
+        $nombre = strtoupper($categoria->nombre);
+        /*$file_path = $categoria->file_path;
+        $file_name = $categoria->imagen;
+        $path = "/img/categorias";
+        $borrar_imagen = borrarArchivos($path, $file_path, $file_name);
+        $borrar_miniuatura = borrarArchivos($path, $file_path, 't_'.$file_name);*/
+        $categoria->delete();
+
+        flash("Borrada la Categoria <strong>$nombre</strong>", 'danger')->important();
+        return back();
+    }
+
+    public function modulo($modulo)
+    {
+        $categorias = Categoria::where('modulo', $modulo)->orderBy('nombre', 'ASC')->paginate(30);
+        $todas = Categoria::count();
+        $productos = Categoria::where('modulo', 0)->count();
+        $blog = Categoria::where('modulo', 1)->count();
+        if(is_numeric($modulo) && $modulo >= 0 && $modulo <= 1){
+            return view('admin.categorias.index')
+                ->with('categorias', $categorias)
+                ->with('todas', $todas)
+                ->with('productos', $productos)
+                ->with('blog', $blog)
+                ->with('modulo', $modulo);
+        }else{
+            return redirect()->route('categorias.index');
+        }
+
+    }
+
+
+}

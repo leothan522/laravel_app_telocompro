@@ -19,11 +19,16 @@ Route::middleware(['auth', 'user.status', 'isadmin'])->prefix('/admin')->group(f
 
     Route::middleware('user.permisos')->group(function (){
 
-        //USuarios
+        //Usuarios
         Route::resource('/usuarios', 'Admin\UsersController');
         Route::get('/usuarios/rol/{role}', 'Admin\UsersController@role')->name('usuarios.role');
+
         //Clientes
         Route::resource('/clientes', 'Admin\ClientesController');
+
+        //Categorias
+        Route::resource('/categorias', 'Admin\CategoriasController');
+        Route::get('/categorias/modulo/{modulo}', 'Admin\CategoriasController@modulo')->name('categorias.modulo');
 
     });
 

@@ -139,6 +139,12 @@ class UsersController extends Controller
                     'clientes.show' => $request->input('clientes_index'),
                     'clientes.edit' => $request->input('clientes_edit'),
                     'clientes.update' => $request->input('clientes_edit'),
+                    'categorias.index' => $request->input('categorias_index'),
+                    'categorias.modulo' => $request->input('categorias_index'),
+                    'categorias.store' => $request->input('categorias_store'),
+                    'categorias.edit' => $request->input('categorias_edit'),
+                    'categorias.update' => $request->input('categorias_edit'),
+                    'categorias.destroy' => $request->input('categorias_destroy'),
                 ];
                 //******************************************** Usuarios SIDEBAR
                 if ($permisos['usuarios.index']) {
@@ -164,6 +170,13 @@ class UsersController extends Controller
                     $permisos['e-commerce'] = "true";
                 }else{
                     $permisos['e-commerce'] = null;
+                }
+
+                //******************************************** Productos SIDEBAR
+                if ($permisos['categorias.index']){
+                    $permisos['productos'] = "true";
+                }else{
+                    $permisos['productos'] = null;
                 }
 
                 $permisos = json_encode($permisos);

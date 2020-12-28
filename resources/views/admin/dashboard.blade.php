@@ -1,5 +1,15 @@
 @extends('layouts.admin.master')
 
+@section('title', 'Escritorio')
+
+@section('header', 'Escritorio')
+
+@section('breadcrumb')
+    {{--<li class="breadcrumb-item active">Usuarios Registrados</li>--}}
+    {{--<li class="breadcrumb-item"><a href="#">Nuevo Usuario</a></li>--}}
+@endsection
+
+
 @section('nav-buscar')
     <form class="form-inline ml-3">
         <div class="input-group input-group-sm">
