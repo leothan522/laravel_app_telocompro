@@ -123,7 +123,7 @@
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
                                                     <input type="file" name="imagen" class="custom-file-input" id="customFileLang" onchange='cambiar()' lang="es" accept="image/jpeg, image/png">
-                                                    <label class="custom-file-label" for="customFileLang" data-browse="Elegir" id="info">Seleccionar Archivo</label>
+                                                    <label class="custom-file-label" for="customFileLang" data-browse="Elegir" id="info">Archivo</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -211,7 +211,7 @@
                                             <a href="@if ($categoria->imagen != null){{ asset('img/categorias/'.$categoria->file_path.'/'.$categoria->imagen) }}
                                                 @else
                                                 {{ asset('img/img-placeholder-320x320.png') }}
-                                            @endif" data-fancybox data-caption="{{ strtoupper($categoria->nombre) }}">
+                                            @endif" data-fancybox data-caption="{{ ucwords($categoria->nombre) }}">
                                                 <img src="@if ($categoria->imagen != null){{ asset('img/categorias/'.$categoria->file_path.'/t_'.$categoria->imagen) }}
                                                 @else
                                                 {{ asset('img/img-placeholder-320x320.png') }}
@@ -219,7 +219,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td>{{ strtoupper($categoria->nombre) }}</td>
+                                    <td>{{ ucwords($categoria->nombre) }}</td>
                                     <td>{{ $categoria->slug }}</td>
                                     <td class="text-center">{{ moduloCategoria($categoria->modulo) }}</td>
                                     <td class="text-center">{{ formatoMillares($categoria->num_productos, 0) }}</td>

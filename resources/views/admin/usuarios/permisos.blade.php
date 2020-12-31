@@ -56,15 +56,19 @@
         <div class="row justify-content-center">
             @if ($user->role > 0)
                 <div class="col-md-3">
-                    <label class="col-md-12">E-commerce</label>
+                    <label class="col-md-12"><i class="fa fa-tachometer-alt"></i> Dashboard</label>
+                    @include('admin.usuarios.permisos.dashboard')
+                </div>
+                <div class="col-md-3">
+                    <label class="col-md-12"><i class="fa fa-store"></i> E-commerce</label>
                     @include('admin.usuarios.permisos.modulo_clientes')
                 </div>
                 <div class="col-md-3">
-                    <label class="col-md-12">Productos</label>
+                    <label class="col-md-12"><i class="fa fa-box"></i> Productos</label>
                     @include('admin.usuarios.permisos.modulo_categorias')
                 </div>
                 <div class="col-md-3">
-                    <label class="col-md-12">Usuarios</label>
+                    <label class="col-md-12"><i class="fa fa-user"></i> Usuarios</label>
                     @include('admin.usuarios.permisos.modulo_usuarios')
                 </div>
 

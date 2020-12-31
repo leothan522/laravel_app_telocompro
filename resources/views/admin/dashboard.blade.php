@@ -23,6 +23,19 @@
     </form>
 @endsection
 
+@section('script')
+    <script>
+        /*document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Do you want to continue',
+                icon: 'error',
+                confirmButtonText: 'Cool',
+            })
+        });*/
+    </script>
+@endsection
+
 @section('content')
     <!-- Default box -->
     <div class="card">

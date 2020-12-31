@@ -58,7 +58,8 @@ class UsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->role = $request->role;
         $user->save();
-        flash('Registrado Exitosamente', 'success')->important();
+        //flash('Registrado Exitosamente', 'success')->important();
+        verSweetAlert2('Usuario creado correctamente.');
         return redirect()->route('usuarios.index');
     }
 
@@ -104,15 +105,18 @@ class UsersController extends Controller
             case "status":
                 if ($user->status > 0) {
                     $user->status = 0;
-                    $tipo = "danger";
-                    $mensaje = '<i class="fas fa-user-slash"></i> Usuario Suspendido';
+                    $tipo = "error";
+                    $icono = '<i class="fas fa-user-slash"></i>';
+                    $mensaje = 'Usuario Suspendido.';
                 } else {
                     $user->status = 1;
                     $tipo = "success";
-                    $mensaje = '<i class="fas fa-user-check"></i> Usuario Activo';
+                    $icono = '<i class="fas fa-user-check"></i>';
+                    $mensaje = 'Usuario activado.';
                 }
                 $user->save();
-                flash($mensaje, $tipo)->important();
+                //flash($icono.' '.$mensaje, $tipo)->important();
+                verSweetAlert2($mensaje, 'banned', $tipo, $icono);
                 return redirect()->route('usuarios.show', $id);
                 break;
 
@@ -120,8 +124,8 @@ class UsersController extends Controller
                 $nueva_clave = Str::random(8);
                 $user->password = Hash::make($nueva_clave);
                 $user->update();
+                verSweetAlert2('Nueva Contraseña generada correctamente', 'toast', 'success');
                 return back()->with('nueva_clave', $nueva_clave);
-
                 break;
 
             case "permisos":
@@ -180,25 +184,19 @@ class UsersController extends Controller
                 }
 
                 $permisos = json_encode($permisos);
+                if ($permisos == $user->permisos){
+                    verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
+                    return back();
+                }
                 $user->permisos = $permisos;
                 $user->update();
-                flash('Permisos Actualizados', 'primary')->important();
+                //flash('Permisos Actualizados', 'primary')->important();
+                verSweetAlert2('Permisos del usuario actualizados.');
                 return back();
 
                 break;
 
             default:
-
-                $rules = [
-                    'name' => 'required|min:8',
-                    'email' => ['required', 'email', Rule::unique('users')->ignore($id),],
-                ];
-                $validator = Validator::make($request->all(), $rules);
-                if ($validator->fails()) {
-                    return back()
-                        ->withErrors($validator)
-                        ->withInput();
-                }
 
                 $name = $user->name;
                 $email = $user->email;
@@ -207,8 +205,19 @@ class UsersController extends Controller
 
                 if ($plataforma == 0) {
                     //Navegador
+                    $rules = [
+                        'name' => 'required|min:8',
+                        'email' => ['required', 'email', Rule::unique('users')->ignore($id),],
+                    ];
+                    $validator = Validator::make($request->all(), $rules);
+                    if ($validator->fails()) {
+                        return back()
+                            ->withErrors($validator)
+                            ->withInput();
+                    }
                     if ($name == $request->name && $email == $request->email && $role == $request->role) {
-                        flash('No se realizo ningun cambio', 'warning')->important();
+                        //flash('No se realizo ningun cambio', 'warning')->important();
+                        verSweetAlert2('No se realizo ningun cambio', 'toast', 'warning');
                         return back();
                     } else {
 
@@ -219,7 +228,8 @@ class UsersController extends Controller
                             $user->status = 1;
                         }
                         $user->update();
-                        flash('Datos guardados correctamente', 'success')->important();
+                        //flash('Datos guardados correctamente', 'success')->important();
+                        verSweetAlert2('Cambios guardados correctamente.');
                         return back();
 
                     }
@@ -228,13 +238,15 @@ class UsersController extends Controller
                     //android
 
                     if ($role == $request->role) {
-                        flash('No se realizo ningun cambio', 'warning')->important();
+                        //flash('No se realizo ningun cambio', 'warning')->important();
+                        verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
                         return back();
                     } else {
 
                         $user->role = $request->role;
                         $user->update();
-                        flash('Datos guardados correctamente', 'success')->important();
+                        //flash('Datos guardados correctamente', 'success')->important();
+                        verSweetAlert2('Cambios guardados correctamente.');
                         return back();
 
                     }

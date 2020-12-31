@@ -55,7 +55,7 @@ class CategoriasController extends Controller
         }
 
         $categoria = new Categoria($request->all());
-        $categoria->nombre = e($request->nombre);
+        $categoria->nombre = ucwords(e($request->nombre));
         $categoria->slug = Str::slug($request->nombre);
         $categoria->modulo = $request->modulo;
         if ($request->hasFile('imagen')) {
@@ -64,7 +64,8 @@ class CategoriasController extends Controller
         }
         $categoria->save();
 
-        flash('Categoria Creada Correctamente', 'success')->important();
+        //flash('Categoria Creada Correctamente', 'success')->important();
+        verSweetAlert2('Categoria creada correctamente.');
         return back();
 
     }
@@ -117,7 +118,7 @@ class CategoriasController extends Controller
             $miniatura = crearMiniaturas($path, $uploads->getPathName(), $uploads->getFileName());
         }
 
-        $categoria->nombre = e($request->nombre);
+        $categoria->nombre = ucwords(e($request->nombre));
         $categoria->modulo = $request->modulo;
         if ($request->hasFile('imagen')) {
             $categoria->file_path = date('Y-m-d');
@@ -125,7 +126,8 @@ class CategoriasController extends Controller
         }
         $categoria->update();
 
-        flash('Cambios Guardados Correctamente', 'primary')->important();
+        //flash('Cambios Guardados Correctamente', 'primary')->important();
+        verSweetAlert2('Cambios guardados correctamente.');
         return back();
     }
 

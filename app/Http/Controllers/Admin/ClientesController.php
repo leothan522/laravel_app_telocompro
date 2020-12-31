@@ -98,7 +98,8 @@ class ClientesController extends Controller
         $cliente = Cliente::find($id);
         $cliente->fill($request->all());
         $cliente->update();
-        flash('Datos Guardados Exitosamente', 'primary')->important();
+        //flash('Datos Guardados Exitosamente', 'primary')->important();
+        verSweetAlert2('Cambios guardados correctamente.');
         return back();
     }
 

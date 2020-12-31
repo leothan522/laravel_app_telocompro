@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="card card-purple">
         <div class="card-header">
-            <h5 class="card-title">Usuarios</h5>
+            <h5 class="card-title"><i class="fa fa-users text-sm"></i> Usuarios</h5>
             <div class="card-tools">
                 {{--<span class="btn btn-tool"><i class="fas fa-user-shield"></i></span>--}}
                 <div class="custom-control custom-checkbox">

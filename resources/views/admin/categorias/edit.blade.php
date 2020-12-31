@@ -92,7 +92,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                     </div>
-                                    {!! Form::text('nombre', strtoupper($categoria->nombre), ['class' => 'form-control', 'placeholder' => 'Nombre de la Categoria', 'required']) !!}
+                                    {!! Form::text('nombre', ucwords($categoria->nombre), ['class' => 'form-control', 'placeholder' => 'Nombre de la Categoria', 'required']) !!}
                                 </div>
                             </div>
                             {{--<div class="form-group">
@@ -126,7 +126,7 @@
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
                                                     <input type="file" name="imagen" class="custom-file-input" id="customFileLang" onchange='cambiar()' lang="es" accept="image/jpeg, image/png">
-                                                    <label class="custom-file-label" for="customFileLang" data-browse="Elegir" id="info">Seleccionar Archivo</label>
+                                                    <label class="custom-file-label" for="customFileLang" data-browse="Elegir" id="info">Archivo</label>
                                                 </div>
                                             </div>
                                         </div>

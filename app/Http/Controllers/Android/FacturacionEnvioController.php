@@ -70,11 +70,13 @@ class FacturacionEnvioController extends Controller
             $class = "success";
         }else{
             $cliente = Cliente::find($request->id_cliente);
+            //dd($cliente->toArray());
             $cliente->fill($request->all());
             $cliente->update();
             $class = "primary";
         }
-        flash('Datos Guardados Exitosamente', $class)->important();
+        //flash('Datos Guardados Exitosamente', $class)->important();
+        verSweetAlert2('Datos guardados correctamente.');
         return back();
     }
 }

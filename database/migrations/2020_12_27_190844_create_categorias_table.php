@@ -16,12 +16,12 @@ class CreateCategoriasTable extends Migration
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('slug');
             $table->integer('modulo')->default(0);
             $table->string('file_path')->nullable();
             $table->string('imagen')->nullable();
             $table->integer('num_productos')->nullable();
             $table->integer('por_defecto')->default(0);
+            $table->string('slug');
             $table->timestamps();
         });
     }

@@ -5,7 +5,8 @@ use Carbon\Carbon;
 
 function hola()
 {
-    return "Funciones Personalidas bien creada";
+    //alert()->success('¡Éxito!','Lorem ipsum dolor sit amet.')->persistent(true,false);
+    //return "Funciones Personalidas bien creada";
 }
 
 function status($i)
@@ -125,9 +126,9 @@ function crearMiniaturas($path, $file_path, $file_name)
 {
     $upload_path = public_path() . '' . $path . '/' . date('Y-m-d');
     $img = Image::make($file_path);
-    $img->fit(256, 256, function ($constraint) {
-        $constraint->aspectRatio();
-        $constraint->upsize();
+    $img->resize(270, 270, function ($constraint) {
+        //$constraint->aspectRatio();
+        //$constraint->upsize();
     });
     $img->save($upload_path . '/t_' . $file_name);
     return $img;
@@ -137,5 +138,113 @@ function crearMiniaturas($path, $file_path, $file_name)
 function borrarArchivos($path, $file_path, $file_name)
 {
     return unlink(public_path() . '' . $path . '/' . $file_path . '/' . $file_name);
+}
+
+//Estados de los Productos
+function estadoProducto($i = null)
+{
+    $modulo = [
+        '0' => "Borrador",
+        '1' => "Publicado"
+    ];
+    if (is_null($i)) {
+        return $modulo;
+    } else {
+        return $modulo[$i];
+    }
+}
+
+//Visibilidad de los Productos
+function visibilidadProducto($i = null)
+{
+    $modulo = [
+        '0' => "Publico",
+        '1' => "Privado"
+    ];
+    if (is_null($i)) {
+        return $modulo;
+    } else {
+        return $modulo[$i];
+    }
+}
+
+//Unidades de Peso
+function undPeso($i = null)
+{
+    $modulo = [
+        'Kg.' => "Kilogramos",
+        'Lt.' => "Litros"
+    ];
+    if (is_null($i)) {
+        return $modulo;
+    } else {
+        return $modulo[$i];
+    }
+}
+
+//Alertas de sweetAlert2
+function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i class="far fa-thumbs-up"></i>')
+{
+    switch ($alert){
+        default:
+            alert()->success('¡Éxito!',$mensaje)->persistent(true,false);
+        break;
+        case "banned":
+            alert('¡Éxito!', $mensaje, $type)->iconHtml($icono)->persistent(true,false);
+        break;
+        case "toast":
+            toast($mensaje, $type);
+        break;
+        case "delete":
+            alert()->question('Are you sure?','You won\'t be able to revert this!')->showCancelButton()->showConfirmButton()->focusCancel(true);
+        break;
+    }
+    /*alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
+        alert()->info('InfoAlert','Lorem ipsum dolor sit amet.');
+        alert()->warning('WarningAlert','Lorem ipsum dolor sit amet.');
+        alert()->error('ErrorAlert','Lorem ipsum dolor sit amet.');
+        alert()->question('QuestionAlert','Lorem ipsum dolor sit amet.');
+        toast('Success Toast','success');.
+        // example:
+        alert()->success('Post Created', '<strong>Successfully</strong>')->toHtml();
+        // example:
+        alert('Title','Lorem Lorem Lorem', 'success')->addImage('https://unsplash.it/400/200');
+        // example:
+        alert('Title','Lorem Lorem Lorem', 'success')->width('720px');
+        // example:
+        alert('Title','Lorem Lorem Lorem', 'success')->padding('50px');
+        */
+    // example:
+    //alert()->success('¡Éxito!',$mensaje)->persistent(true,false);
+    // example:
+    //alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.')->showConfirmButton('Confirm', '#3085d6');
+    // example:
+    //alert()->question('Are you sure?','You won\'t be able to revert this!')->showCancelButton('Cancel', '#aaa');
+    // example:
+    //toast('Post Updated','success','top-right')->showCloseButton();
+    // example:
+    //toast('Post Updated','success','top-right')->hideCloseButton();
+    // example:
+    /*alert()->question('Are you sure?','You won\'t be able to revert this!')
+        ->showConfirmButton('Yes! Delete it', '#3085d6')
+        ->showCancelButton('Cancel', '#aaa')->reverseButtons();*/
+
+    // example:
+    // alert()->error('Oops...', 'Something went wrong!')->footer('<a href="#">Why do I have this issue?</a>');
+    // example:
+    //alert()->success('Post Created', 'Successfully')->toToast();
+    // example:
+    //alert('Title','Lorem Lorem Lorem', 'success')->background('#2acc56');
+    // example:
+    //()->success('Post Created', 'Successfully')->buttonsStyling(false);
+    // example:
+    //alert()->success('Post Created', 'Successfully')->iconHtml('<i class="far fa-thumbs-up"></i>');
+    // example:
+    //alert()->question('Are you sure?','You won\'t be able to revert this!')->showCancelButton()->showConfirmButton()->focusConfirm(true);
+    // example:
+    //alert()->question('Are you sure?','You won\'t be able to revert this!')->showCancelButton()->showConfirmButton()->focusCancel(true);
+    // example:
+    //toast('Signed in successfully','success')->timerProgressBar();
+
 }
 

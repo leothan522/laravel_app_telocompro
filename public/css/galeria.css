@@ -1,0 +1,63 @@
+.producto_galeria{
+    overflow: hidden;
+}
+.producto_galeria .tumbs{
+    /*float: left;*/
+    display: block;
+    margin-right: 1%;
+    width: 100%;
+}
+.producto_galeria .tumbs a{
+    border: 1px dashed #6666;
+    border-radius: 4px;
+    color: #333333;
+    display: block;
+    font-size: 1.5em;
+    text-align: center;
+    padding: 12px;
+    width: 100%;
+}
+.producto_galeria .tumbs a:hover{
+    background-color: #2caaff;
+    color: #ffffff;
+}
+#galeria_imagen{
+    display: none;
+}
+.tumbs{
+    overflow: hidden;
+}
+.tumbs .tumb{
+    padding: 2px;
+    float: left;
+    width: 48%;
+    position: relative;
+    margin-top: 16px;
+}
+.tumbs .tumb:nth-child(odd){
+    margin-right: 4% !important;
+}
+.tumbs .tumb img{
+    border: 1px solid #000000;
+    width: 100%;
+    border-radius: 4px;
+}
+.tumbs .tumb .btn_delete_galeria{
+    display: inline-block;
+    position: absolute;
+    color: #ffffff;
+    bottom: 8px;
+    right: 8px;
+    width: auto;
+    border: none;
+    background-color: rgba(0,0,0,0.5);
+    padding: 6px 10px;
+    border-radius: 50%;
+    font-size: 0.8em;
+}
+
+.tumbs .tumb a{
+    padding: 0;
+    border: 0;
+}
+

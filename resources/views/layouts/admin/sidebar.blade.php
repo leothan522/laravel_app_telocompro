@@ -19,7 +19,7 @@
             {{-- ********************* ***************************  SIDEBAR BOTONES *****************************--}}
             <li class="nav-item">
                 <a href="{{ route('admin.dashboard') }}" class="nav-link lko-admin.dashboard lkm-admin.dashboard lk-admin.dashboard">
-                    <i class="nav-icon fas fa-home"></i>
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
                         Escritorio
                         {{--<span class="right badge badge-danger">New</span>--}}
@@ -29,7 +29,7 @@
             @if (leerJson(Auth::user()->permisos, 'e-commerce') || Auth::user()->role == 100)
             <li class="nav-item has-treeview lko-clientes.index">
                 <a href="#" class="nav-link lkm-clientes.index">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <i class="nav-icon fas fa-store"></i>
                     <p>
                         E-commerce
                         <i class="right fas fa-angle-left"></i>
@@ -73,9 +73,9 @@
             </li>
             @endif
             @if (leerJson(Auth::user()->permisos, 'productos') || Auth::user()->role == 100)
-            <li class="nav-item has-treeview lko-categorias.index">
-                <a href="#" class="nav-link lkm-categorias.index">
-                    <i class="nav-icon fas fa-th-large"></i>
+            <li class="nav-item has-treeview lko-categorias.index lko-productos.create">
+                <a href="#" class="nav-link lkm-categorias.index lkm-productos.create">
+                    <i class="nav-icon fas fa-box"></i>
                     <p>
                         Productos
                         <i class="right fas fa-angle-left"></i>
@@ -91,7 +91,7 @@
                 </ul>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link lk-">
+                        <a href="{{ route('productos.create') }}" class="nav-link lk-productos.create">
                             <i class="fa fa-plus-circle nav-icon"></i>
                             <p>Añadir Nuevo</p>
                         </a>

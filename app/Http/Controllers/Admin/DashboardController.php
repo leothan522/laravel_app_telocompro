@@ -9,6 +9,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $respuesta = verSweetAlert2("hola mundo", 'delete');
+        //dd($respuesta);
         return view('admin.dashboard');
     }
 }

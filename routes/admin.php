@@ -30,6 +30,11 @@ Route::middleware(['auth', 'user.status', 'isadmin'])->prefix('/admin')->group(f
         Route::resource('/categorias', 'Admin\CategoriasController');
         Route::get('/categorias/modulo/{modulo}', 'Admin\CategoriasController@modulo')->name('categorias.modulo');
 
+        //Productos
+        Route::resource('/productos', 'Admin\ProductosController');
+        Route::post('/productos/{id}/galeria/add', 'Admin\ProductosController@galeriaAdd')->name('productos.galeria_add');
+        Route::get('/productos/{id}/galeria/{gid}/delete', 'Admin\ProductosController@galeriaDelete')->name('productos.galeria_delete');
+
     });
 
 });

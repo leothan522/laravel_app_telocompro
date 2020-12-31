@@ -46,6 +46,7 @@
 
         <!-- Main content -->
         <section class="content">
+            @include('sweetalert::alert')
             @yield('content')
         </section>
         <!-- /.content -->

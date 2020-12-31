@@ -78,6 +78,7 @@
 
         <!-- Main content -->
         <section class="content">
+            @include('sweetalert::alert')
             @yield('content')
         </section>
         <!-- /.content -->
@@ -110,6 +111,8 @@
 
 <!-- Bootbox -->
 <script src="{{ asset('plugins/bootbox/bootbox.all.min.js') }}"></script>
+<!-- Sweetalert2-->
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
 
 

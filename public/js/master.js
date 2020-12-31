@@ -5,5 +5,5 @@ document.addEventListener('DOMContentLoaded', function () {
     route_active = document.getElementsByClassName('lkm-'+route)[0].classList.add('active');
     route_active = document.getElementsByClassName('lk-'+route)[0].classList.add('active');
 
-    //navbar
+
 });
