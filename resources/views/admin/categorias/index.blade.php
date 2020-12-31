@@ -241,26 +241,19 @@
 
                                                 <script>
                                                     $(document).on("click", ".show-alert-{{ $categoria->id }}", function(e) {
-                                                        bootbox.confirm({
-                                                            size: "small",
-                                                            message: "¿Esta seguro que desea Eliminar?",
-                                                            buttons: {
-                                                                confirm: {
-                                                                    label: 'Si',
-                                                                    className: 'btn-success'
-                                                                },
-                                                                cancel: {
-                                                                    label: 'No',
-                                                                    className: 'btn-danger'
-                                                                }
-                                                            },
-                                                            callback: function(result){
-                                                                /* result is a boolean; true = OK, false = Cancel*/
-                                                                if (result){
-                                                                    document.getElementById('form_delete_{{ $categoria->id }}').submit();
-                                                                }
+                                                        Swal.fire({
+                                                            title: '¿Estas seguro?',
+                                                            text: "¡No podrás revertir esto!",
+                                                            icon: 'warning',
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: '#3085d6',
+                                                            cancelButtonColor: '#d33',
+                                                            confirmButtonText: '¡Sí, bórralo!'
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                document.getElementById('form_delete_{{ $categoria->id }}').submit();
                                                             }
-                                                        });
+                                                        })
                                                     });
                                                 </script>
                                             @endif

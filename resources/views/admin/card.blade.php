@@ -107,6 +107,23 @@
                 });
             });
         </script>
+            <script>
+                $(document).on("click", ".show-alert-{{ $categoria->id }}", function(e) {
+                    Swal.fire({
+                        title: '¿Estas seguro?',
+                        text: "¡No podrás revertir esto!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '¡Sí, bórralo!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('form_delete_{{ $categoria->id }}').submit();
+                        }
+                    })
+                });
+            </script>
     @endif
 </div>
 {!! Form::close() !!}

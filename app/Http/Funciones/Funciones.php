@@ -189,8 +189,8 @@ function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i
         default:
             alert()->success('¡Éxito!',$mensaje)->persistent(true,false);
         break;
-        case "banned":
-            alert('¡Éxito!', $mensaje, $type)->iconHtml($icono)->persistent(true,false);
+        case "iconHtml":
+            alert('¡Éxito!', $mensaje, $type)->iconHtml($icono)->persistent(true,false)->toHtml();
         break;
         case "toast":
             toast($mensaje, $type);

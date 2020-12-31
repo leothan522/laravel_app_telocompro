@@ -148,7 +148,9 @@ class CategoriasController extends Controller
         $borrar_miniuatura = borrarArchivos($path, $file_path, 't_'.$file_name);*/
         $categoria->delete();
 
-        flash("Borrada la Categoria <strong>$nombre</strong>", 'danger')->important();
+        //flash("Borrada la Categoria <strong>$nombre</strong>", 'danger')->important();
+        //verSweetAlert2("Borrada la categoria $nombre");
+        verSweetAlert2("Borrada la categoría <strong class='text-danger'>$nombre</strong>", 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
         return back();
     }
 

@@ -116,7 +116,7 @@ class UsersController extends Controller
                 }
                 $user->save();
                 //flash($icono.' '.$mensaje, $tipo)->important();
-                verSweetAlert2($mensaje, 'banned', $tipo, $icono);
+                verSweetAlert2($mensaje, 'iconHtml', $tipo, $icono);
                 return redirect()->route('usuarios.show', $id);
                 break;
 

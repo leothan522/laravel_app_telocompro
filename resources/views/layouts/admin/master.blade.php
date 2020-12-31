@@ -109,8 +109,10 @@
 <!-- AdminLTE for demo purposes -->
 {{--<script src="{{ asset('adminlte/dist/js/demo.js') }}"></script>--}}
 
+{{--
 <!-- Bootbox -->
 <script src="{{ asset('plugins/bootbox/bootbox.all.min.js') }}"></script>
+--}}
 <!-- Sweetalert2-->
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
