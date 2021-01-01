@@ -50,6 +50,37 @@
                 )
             }
         })*/
+        /*$(document).on("click", ".show-alert-", function(e) {
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, bórralo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form_delete_').submit();
+                }
+            })
+        });*/
+
+        /*function alertaBorrar(id){
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, bórralo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form_delete_' + id).submit();
+                }
+            })
+        }*/
     </script>
 @endsection
 
@@ -67,7 +98,8 @@
             </div>
         </div>
         <div class="card-body">
-            Start creating your amazing application!
+            Start creating your amazing application! tonatha
+            <button type="button" class="btn btn-info" onclick="alertaBorrar('form_delete_{{ 1 }}')"><i class="fas fa-trash"></i></button>
         </div>
         <!-- /.card-body -->
         <div class="card-footer">

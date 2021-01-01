@@ -217,7 +217,7 @@ class UsersController extends Controller
                     }
                     if ($name == $request->name && $email == $request->email && $role == $request->role) {
                         //flash('No se realizo ningun cambio', 'warning')->important();
-                        verSweetAlert2('No se realizo ningun cambio', 'toast', 'warning');
+                        verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
                         return back();
                     } else {
 

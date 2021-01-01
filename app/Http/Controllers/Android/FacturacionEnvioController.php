@@ -70,13 +70,35 @@ class FacturacionEnvioController extends Controller
             $class = "success";
         }else{
             $cliente = Cliente::find($request->id_cliente);
-            //dd($cliente->toArray());
-            $cliente->fill($request->all());
-            $cliente->update();
-            $class = "primary";
+            $array_db = $cliente->toArray();
+            $array_form = $request->all();
+            unset($array_form['_token']);
+            unset($array_form['opcion']);
+            unset($array_form['id_cliente']);
+            unset($array_db['id']);
+            unset($array_db['codigo_postal']);
+            unset($array_db['estados_id']);
+            unset($array_db['municipios_id']);
+            unset($array_db['parroquias_id']);
+            unset($array_db['num_pedidos']);
+            unset($array_db['gasto_bs']);
+            unset($array_db['gasto_dolar']);
+            unset($array_db['ultima_compra']);
+            unset($array_db['users_id']);
+            unset($array_db['created_at']);
+            unset($array_db['updated_at']);
+            if (array_diff($array_db, $array_form)){
+                $cliente->fill($request->all());
+                $cliente->update();
+                verSweetAlert2('Datos guardados correctamente.');
+            }else{
+                verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
+            }
+
         }
+        $class = "primary";
         //flash('Datos Guardados Exitosamente', $class)->important();
-        verSweetAlert2('Datos guardados correctamente.');
+
         return back();
     }
 }

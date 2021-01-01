@@ -183,7 +183,7 @@ function undPeso($i = null)
 }
 
 //Alertas de sweetAlert2
-function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i class="far fa-thumbs-up"></i>')
+function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i class="fa fa-trash"></i>')
 {
     switch ($alert){
         default:
@@ -194,9 +194,6 @@ function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i
         break;
         case "toast":
             toast($mensaje, $type);
-        break;
-        case "delete":
-            alert()->question('Are you sure?','You won\'t be able to revert this!')->showCancelButton()->showConfirmButton()->focusCancel(true);
         break;
     }
     /*alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');

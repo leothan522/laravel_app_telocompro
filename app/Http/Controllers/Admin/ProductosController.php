@@ -51,6 +51,7 @@ class ProductosController extends Controller
         }
 
         $producto = new Producto($request->all());
+        $producto->sku = strtoupper($request->sku);
         $producto->slug = Str::slug($request->nombre);
         if ($request->hasFile('imagen')){
             $producto->file_path = date("Y-m-d");
@@ -103,6 +104,7 @@ class ProductosController extends Controller
         $file_path = $producto->file_path;
         $file_name = $producto->imagen;
         $file = $request->imagen;
+
         if ($request->hasFile('imagen')){
             if (!is_null($file_name)){
                 $borrar_imagen = borrarArchivos($path, $file_path, $file_name);
@@ -111,6 +113,22 @@ class ProductosController extends Controller
             $uploads = subirArchivos($file, $path);
             $miniatura = crearMiniaturas($path, $uploads->getPathName(), $uploads->getFileName());
         }
+
+        $array_db = $producto->toArray();
+        $array_form = $request->all();
+        unset($array_form['_token']);
+        unset($array_form['_method']);
+        if (!$request->venta_individual){
+            $array_form['venta_individual'] = 0;
+        }
+        unset($array_db['id']);
+        unset($array_db['created_at']);
+        unset($array_db['updated_at']);
+        unset($array_db['deleted_at']);
+        unset($array_db['file_path']);
+        unset($array_db['imagen']);
+        unset($array_db['cant_ventas']);
+        unset($array_db['slug']);
 
         $individual = $producto->venta_individual;
         $producto->fill($request->all());
@@ -121,9 +139,15 @@ class ProductosController extends Controller
         if (!$request->venta_individual && $individual == 1){
             $producto->venta_individual = 0;
         }
-        $producto->update();
-        //flash('Producto Actualizado Correctamente', 'primary')->important();
-        verSweetAlert2('Cambios guardados correctamente.');
+
+        if (array_diff_assoc($array_db, $array_form) || $request->hasFile('imagen')){
+            $producto->update();
+            //flash('Producto Actualizado Correctamente', 'primary')->important();
+            verSweetAlert2('Cambios guardados correctamente.');
+        }else{
+            verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
+        }
+
         return redirect()->route('productos.edit', $producto->id);
     }
 
@@ -171,8 +195,8 @@ class ProductosController extends Controller
             $galeria->delete();
             borrarArchivos($path, $file_path, $file_name);
             borrarArchivos($path, $file_path, 't_'.$file_name);
-            flash('Imagen Borrada de la Galeria del Producto', 'danger')->important();
-            //verSweetAlert2('');
+            //flash('Imagen Borrada de la Galeria del Producto', 'danger')->important();
+            verSweetAlert2('Imagen borrada de la galeria del producto', 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
             return back();
         }else{
             //flash('la Imagen NO se puede Borrar', 'warning')->important();

@@ -388,7 +388,8 @@
                                     <a href="#" id="btn_galeria_imagen"><i class="fas fa-plus"></i></a>
                                     @foreach ($producto->galerias as $img)
                                         <div class="tumb">
-                                            <a href="{{ route('productos.galeria_delete', [$producto->id, $img->id]) }}" class="btn_delete_galeria"><i class="fa fa-trash"></i></a>
+                                            <button type="button" onclick="alertaBorrar(null, '{{ route('productos.galeria_delete', [$producto->id, $img->id]) }}')" class="btn_delete_galeria"><i class="fa fa-trash"></i></button>
+                                            {{--<a href="{{ route('productos.galeria_delete', [$producto->id, $img->id]) }}" class="btn_delete_galeria"><i class="fa fa-trash"></i></a>--}}
                                             <a href="{{ asset('img/productos_galeria/'.$img->file_path.'/'.$img->imagen) }}" data-fancybox data-caption="{{ strtoupper($img->nombre) }}">
                                                 <img src="{{ asset('img/productos_galeria/'.$img->file_path.'/t_'.$img->imagen) }}">
                                             </a>

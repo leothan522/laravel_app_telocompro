@@ -234,28 +234,12 @@
                                             @endif
                                             @if (leerJson(Auth::user()->permisos, 'categorias.destroy') || Auth::user()->role == 100)
                                                 @if ($categoria->por_defecto != 1)
-                                                    <button type="button" class="btn btn-info show-alert-{{ $categoria->id }}"><i class="fas fa-trash"></i></button>
+                                                    <button type="button" onclick="alertaBorrar('form_delete_{{ $categoria->id }}')" class="btn btn-info">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
                                                     @else
                                                     <button type="button" class="btn btn-info disabled"><i class="fas fa-trash"></i></button>
                                                 @endif
-
-                                                <script>
-                                                    $(document).on("click", ".show-alert-{{ $categoria->id }}", function(e) {
-                                                        Swal.fire({
-                                                            title: '¿Estas seguro?',
-                                                            text: "¡No podrás revertir esto!",
-                                                            icon: 'warning',
-                                                            showCancelButton: true,
-                                                            confirmButtonColor: '#3085d6',
-                                                            cancelButtonColor: '#d33',
-                                                            confirmButtonText: '¡Sí, bórralo!'
-                                                        }).then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                document.getElementById('form_delete_{{ $categoria->id }}').submit();
-                                                            }
-                                                        })
-                                                    });
-                                                </script>
                                             @endif
                                         </div>
                                         {!! Form::close() !!}

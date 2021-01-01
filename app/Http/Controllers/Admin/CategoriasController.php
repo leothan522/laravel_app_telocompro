@@ -106,6 +106,8 @@ class CategoriasController extends Controller
         $categoria = Categoria::find($id);
         $file_path = $categoria->file_path;
         $file_name = $categoria->imagen;
+        $db_nombre = $categoria->nombre;
+        $db_modulo = $categoria->modulo;
 
         $path = "/img/categorias";
         $file = $request->imagen;
@@ -116,6 +118,11 @@ class CategoriasController extends Controller
             }
             $uploads = subirArchivos($file, $path);
             $miniatura = crearMiniaturas($path, $uploads->getPathName(), $uploads->getFileName());
+        }
+
+        if ($db_nombre == $request->nombre && $db_modulo == $request->modulo && !$request->hasFile('imagen')){
+            verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
+            return back();
         }
 
         $categoria->nombre = ucwords(e($request->nombre));

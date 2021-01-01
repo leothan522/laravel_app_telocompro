@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', function () {
         galeria_imagen.click();
     });
     galeria_imagen.addEventListener('change', function () {
+        Swal.fire({
+            title: '¡Subiendo Archivo!',
+            didOpen: () => {
+                Swal.showLoading()
+            },
+            allowOutsideClick: false,
+            showConfirmButton: false,
+        });
         document.getElementById('formGaleria').submit();
     });
 });
