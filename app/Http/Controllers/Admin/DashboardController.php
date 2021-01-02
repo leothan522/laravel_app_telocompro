@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        alert()->success('¡Éxito!','Lorem ipsum dolor sit amet.')->persistent(true,false);
+        //alert()->success('¡Éxito!','Lorem ipsum dolor sit amet.')->persistent(true,false);
         return view('admin.dashboard');
     }
 }

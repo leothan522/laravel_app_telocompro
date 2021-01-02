@@ -5,7 +5,7 @@
 @section('header', 'Productos')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="#">Productos Registrados</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('productos.index') }}">Productos Registrados</a></li>
     <li class="breadcrumb-item active">Crear Producto</li>
 @endsection
 
@@ -144,7 +144,7 @@
             </div>
         </div>
 
-        {!! Form::open(['route' => 'productos.store', 'method' => 'post', 'files' => true, 'id' => 'form1']) !!}
+        {!! Form::open(['route' => 'productos.store', 'method' => 'post', 'files' => true]) !!}
 
         <div class="row justify-content-center">
 

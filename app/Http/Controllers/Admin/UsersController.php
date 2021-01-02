@@ -149,6 +149,17 @@ class UsersController extends Controller
                     'categorias.edit' => $request->input('categorias_edit'),
                     'categorias.update' => $request->input('categorias_edit'),
                     'categorias.destroy' => $request->input('categorias_destroy'),
+                    'productos.index' => $request->input('productos_index'),
+                    'productos.filtrar' => $request->input('productos_index'),
+                    'productos.ver' => $request->input('productos_index'),
+                    'productos.create' => $request->input('productos_create'),
+                    'productos.store' => $request->input('productos_create'),
+                    'productos.edit' => $request->input('productos_edit'),
+                    'productos.update' => $request->input('productos_edit'),
+                    'productos.galeria_add' => $request->input('productos_edit'),
+                    'productos.galeria_delete' => $request->input('productos_edit'),
+                    'productos.acciones_lote' => $request->input('productos_edit'),
+                    'productos.destroy' => $request->input('productos_destroy'),
                 ];
                 //******************************************** Usuarios SIDEBAR
                 if ($permisos['usuarios.index']) {
@@ -177,7 +188,7 @@ class UsersController extends Controller
                 }
 
                 //******************************************** Productos SIDEBAR
-                if ($permisos['categorias.index']){
+                if ($permisos['categorias.index'] || $permisos['productos.index']){
                     $permisos['productos'] = "true";
                 }else{
                     $permisos['productos'] = null;

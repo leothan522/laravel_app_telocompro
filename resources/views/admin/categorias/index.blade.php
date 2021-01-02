@@ -198,7 +198,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col" data-breakpoints="xs">Slug</th>
                                 <th scope="col" class="text-center" data-breakpoints="xs">Modulo</th>
-                                <th scope="col" class="text-center" data-breakpoints="xs">Cantidad</th>
+                                <th scope="col" class="text-center" data-breakpoints="xs">Productos</th>
                                 <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
                             </tr>
                             </thead>

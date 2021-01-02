@@ -99,7 +99,7 @@
         </div>
         <div class="card-body">
             Start creating your amazing application! tonatha
-            <button type="button" class="btn btn-info" onclick="alertaBorrar('form_delete_{{ 1 }}')"><i class="fas fa-trash"></i></button>
+            {{--<button type="button" class="btn btn-info" onclick="alertaBorrar('form_delete_{{ 1 }}')"><i class="fas fa-trash"></i></button>--}}
         </div>
         <!-- /.card-body -->
         <div class="card-footer">

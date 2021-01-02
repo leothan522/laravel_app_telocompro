@@ -183,7 +183,7 @@ function undPeso($i = null)
 }
 
 //Alertas de sweetAlert2
-function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i class="fa fa-trash"></i>')
+function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i class="fa fa-trash-alt"></i>')
 {
     switch ($alert){
         default:

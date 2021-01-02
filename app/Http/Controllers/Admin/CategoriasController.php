@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoriasRequest;
 use App\Models\Categoria;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -146,6 +147,7 @@ class CategoriasController extends Controller
      */
     public function destroy($id)
     {
+        $por_defecto = Categoria::where('por_defecto', 1)->first();
         $categoria = Categoria::find($id);
         $nombre = strtoupper($categoria->nombre);
         /*$file_path = $categoria->file_path;
@@ -153,11 +155,18 @@ class CategoriasController extends Controller
         $path = "/img/categorias";
         $borrar_imagen = borrarArchivos($path, $file_path, $file_name);
         $borrar_miniuatura = borrarArchivos($path, $file_path, 't_'.$file_name);*/
+        $productos = Producto::where('categorias_id', $categoria->id)->get();
+        foreach ($productos as $producto){
+            $cambiar = Producto::find($producto->id);
+            $cambiar->categorias_id = $por_defecto->id;
+            $cambiar->update();
+            $por_defecto->num_productos = $por_defecto->num_productos + 1;
+            $por_defecto->update();
+        }
         $categoria->delete();
 
         //flash("Borrada la Categoria <strong>$nombre</strong>", 'danger')->important();
-        //verSweetAlert2("Borrada la categoria $nombre");
-        verSweetAlert2("Borrada la categoría <strong class='text-danger'>$nombre</strong>", 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
+        verSweetAlert2("Borrada la categoría <strong class='text-danger'>$nombre</strong>", 'iconHtml', 'error');
         return back();
     }
 

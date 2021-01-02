@@ -65,6 +65,7 @@
                 </div>
                 <div class="col-md-3">
                     <label class="col-md-12"><i class="fa fa-box"></i> Productos</label>
+                    @include('admin.usuarios.permisos.modulo_productos')
                     @include('admin.usuarios.permisos.modulo_categorias')
                 </div>
                 <div class="col-md-3">

@@ -5,7 +5,7 @@
 @section('header', 'Productos')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="#">Productos Registrados</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('productos.index') }}">Productos Registrados</a></li>
     <li class="breadcrumb-item active">Actualizar Producto</li>
 @endsection
 
