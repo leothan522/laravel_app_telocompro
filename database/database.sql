@@ -20,13 +20,13 @@ USE `laravel-app`;
 CREATE TABLE IF NOT EXISTS `categorias` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `modulo` int(11) NOT NULL DEFAULT '0',
   `file_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `num_productos` int(11) DEFAULT NULL,
   `por_defecto` int(11) NOT NULL DEFAULT '0',
   `deleted_at` timestamp NULL DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `estados` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla laravel-app.estados: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla laravel-app.estados: ~26 rows (aproximadamente)
 /*!40000 ALTER TABLE `estados` DISABLE KEYS */;
 INSERT INTO `estados` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
 	(1, 'DTTO. CAPITAL\r', NULL, NULL),
@@ -130,6 +130,23 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 /*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
 
+-- Volcando estructura para tabla laravel-app.galerias
+CREATE TABLE IF NOT EXISTS `galerias` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `productos_id` bigint(20) unsigned NOT NULL,
+  `file_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `galerias_productos_id_foreign` (`productos_id`),
+  CONSTRAINT `galerias_productos_id_foreign` FOREIGN KEY (`productos_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Volcando datos para la tabla laravel-app.galerias: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `galerias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `galerias` ENABLE KEYS */;
+
 -- Volcando estructura para tabla laravel-app.municipios
 CREATE TABLE IF NOT EXISTS `municipios` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -142,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   CONSTRAINT `municipios_estados_id_foreign` FOREIGN KEY (`estados_id`) REFERENCES `estados` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9999 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla laravel-app.municipios: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla laravel-app.municipios: ~443 rows (aproximadamente)
 /*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
 INSERT INTO `municipios` (`id`, `nombre`, `estados_id`, `created_at`, `updated_at`) VALUES
 	(101, 'LIBERTADOR', 1, NULL, NULL),
@@ -595,7 +612,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tabla_id` bigint(20) unsigned DEFAULT NULL,
-  `valor` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `valor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -620,7 +637,7 @@ CREATE TABLE IF NOT EXISTS `parroquias` (
   CONSTRAINT `parroquias_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=210511 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla laravel-app.parroquias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla laravel-app.parroquias: ~1.000 rows (aproximadamente)
 /*!40000 ALTER TABLE `parroquias` DISABLE KEYS */;
 INSERT INTO `parroquias` (`id`, `nombre`, `municipios_id`, `estados_id`, `created_at`, `updated_at`) VALUES
 	(10101, 'ALTAGRACIA', 101, 1, NULL, NULL),
@@ -1657,6 +1674,39 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 
+-- Volcando estructura para tabla laravel-app.productos
+CREATE TABLE IF NOT EXISTS `productos` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sku` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `categorias_id` bigint(20) unsigned DEFAULT NULL,
+  `precio` decimal(12,2) DEFAULT NULL,
+  `cant_inventario` int(11) DEFAULT NULL,
+  `cant_ventas` int(11) DEFAULT NULL,
+  `poca_existencia` int(11) DEFAULT NULL,
+  `peso` double(8,2) DEFAULT NULL,
+  `und_peso` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Kg.',
+  `venta_individual` int(11) NOT NULL DEFAULT '0',
+  `max_carrito` int(11) DEFAULT NULL,
+  `file_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado` int(11) NOT NULL DEFAULT '0',
+  `visibilidad` int(11) NOT NULL DEFAULT '0',
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `productos_sku_unique` (`sku`),
+  KEY `productos_categorias_id_foreign` (`categorias_id`),
+  CONSTRAINT `productos_categorias_id_foreign` FOREIGN KEY (`categorias_id`) REFERENCES `categorias` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Volcando datos para la tabla laravel-app.productos: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
+
 -- Volcando estructura para tabla laravel-app.sessions
 CREATE TABLE IF NOT EXISTS `sessions` (
   `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1670,7 +1720,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla laravel-app.sessions: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla laravel-app.sessions: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
 	('dWxOXWwZqiqh8DtyoaaRR7WM94H5QuIlutB5o7ME', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiTWF2WDkzbTNTVkxOcnM1RGp1eFpNSHN3MjJKa0taTmRwNENzMmI0cSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjM6Imh0dHA6Ly9sYXJhdmVsLWFwcC50ZXN0Ijt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDJ3ckZsRElxNHhRMHRhTXJlRkwxYS5QYWtZMUllTEZtYy5DMWZKVVpKazAxV3hKaWpVb3MyIjt9', 1608035247);
@@ -1699,7 +1749,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla laravel-app.users: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla laravel-app.users: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `role`, `status`, `permisos`, `plataforma`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'Yonathan Castillo', 'leothan522@gmail.com', NULL, '$2y$10$2wrFlDIq4xQ0taMreFL1a.PakY1IeLFmc.C1fJUZJk01WxJijUos2', NULL, NULL, NULL, NULL, NULL, 100, 1, NULL, '0', NULL, '2020-12-15 08:27:26', '2020-12-15 08:27:26');

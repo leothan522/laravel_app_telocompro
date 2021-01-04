@@ -7,6 +7,7 @@ use App\Models\Parametro;
 use App\Models\Producto;
 use App\Models\User;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardController extends Controller
 {
