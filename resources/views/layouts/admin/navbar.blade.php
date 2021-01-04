@@ -150,23 +150,30 @@
                 <li class="user-footer">
                     {!! Form::open(['route' => 'logout', 'method' => 'post']) !!}
                     <a href="{{ route('profile.show') }}" class="btn btn-default btn-flat">{{ __('Profile') }}</a>
-                    <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-right" onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                    <a href="{{ route('cerrar') }}" class="btn btn-default btn-flat float-right" title="{{ __('Logout') }}">
                         <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                     </a>
+                    {{--<a href="{{ route('logout') }}" class="btn btn-default btn-flat float-right" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                        <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
+                    </a>--}}
                     {!! Form::close() !!}
                     {{--<a href="#" class="btn btn-default btn-flat float-right"></a>--}}
                 </li>
             </ul>
         </li>
         <li class="nav-item @if (Route::currentRouteName() != "profile.show") d-none @endif">
-            {!! Form::open(['route' => 'logout', 'method' => 'post']) !!}
+            <a href="{{ route('cerrar') }}" class="nav-link" data-toggle="tooltip" data-placement="bottom"
+               title="{{ __('Logout') }}">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+            {{--{!! Form::open(['route' => 'logout', 'method' => 'post']) !!}
             <a href="{{ route('logout') }}" class="nav-link" data-toggle="tooltip" data-placement="bottom"
                title="{{ __('Logout') }}" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
-            {!! Form::close() !!}
+            {!! Form::close() !!}--}}
         </li>
         @if (Auth::user()->role == 100)
             <li class="nav-item">

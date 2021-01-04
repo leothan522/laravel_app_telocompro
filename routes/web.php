@@ -27,11 +27,17 @@ Route::middleware(['auth:sanctum', 'verified', 'user.status'])->get('/dashboard'
     return view('welcome');
 })->name('dashboard');
 
-//**************************************** Ruta para  Usuarios Suspendidos
 Route::get('/logout', function () {
     Auth::logout();
+    return redirect()->route('login');
+})->name('cerrar');
+
+//**************************************** Ruta para  Usuarios Suspendidos
+Route::get('/banned', function () {
+    Auth::logout();
     return redirect()->route('login')->with('banned', 'Usuario Suspendido');
-});
+})->name('banned');
+
 
 Route::get('/perfil', function () {
     return view('web.index');
