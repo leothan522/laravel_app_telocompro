@@ -44,5 +44,10 @@ class AppController extends Controller
         return view('android.ogani.checkout');
     }
 
+    public function shopHome()
+    {
+        return view('android.ogani.shop-home');
+    }
+
 
 }

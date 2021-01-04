@@ -22,6 +22,11 @@
             <span class="text-small text-muted float-right">Plantilla Ogani</span>
         </li>
         <li class="nav-item">
+            <a href="{{ route('android.shop_Home', Auth::user()->id) }}" class="nav-link" target="_blank">
+                {{--<i class="far fa-envelope"></i>--}} Home
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('android.shop_grid', Auth::user()->id) }}" class="nav-link" target="_blank">
                 {{--<i class="far fa-envelope"></i>--}} Shop
             </a>
