@@ -9,19 +9,6 @@
     {{--<li class="breadcrumb-item"><a href="#">Nuevo Usuario</a></li>--}}
 @endsection
 
-@section('nav-buscar')
-    <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Buscar productos" aria-label="Search">
-            <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </form>
-@endsection
-
 @section('link')
     <!-- Datatables -->
     <link href="{{ asset('plugins/footable/css/footable.bootstrap.min.css') }}" rel="stylesheet">
@@ -88,11 +75,11 @@
     </script>
 @endsection
 
-{{--
+
 @section('nav-buscar')
-    {!! Form::open(['route' => 'usuarios.index', 'method' => 'get']) !!}
+    {!! Form::open(['route' => 'productos.index', 'method' => 'get']) !!}
     <div class="input-group input-group-sm">
-        <input type="search" name="buscar" class="form-control form-control-navbar"  placeholder="Buscar Usuario" aria-label="Search">
+        <input type="search" name="buscar" class="form-control form-control-navbar"  placeholder="Buscar Producto" aria-label="Search">
         <div class="input-group-append">
             <button class="btn btn-navbar" type="submit">
                 <i class="fas fa-search"></i>
@@ -101,7 +88,6 @@
     </div>
     {!! Form::close() !!}
 @endsection
---}}
 
 @section('content')
     <div class="container-fluid">
@@ -123,7 +109,7 @@
                     <div class="card-body">
 
                         <ol class="breadcrumb">
-                            @if ($ver != 100)
+                            @if ($ver != 100 || isset($_GET['buscar']))
                                 <li class="breadcrumb-item"><a href="{{ route('productos.index') }}">Todos <span class="text-muted">({{ cerosIzquierda($todos) }})</span></a></li>
                             @else
                                 <li class="breadcrumb-item active">Todos ({{ cerosIzquierda($todos) }})</li>
@@ -246,7 +232,7 @@
                                             -
                                         @endif
                                     </td>
-                                    <td class="text-center">-</td>
+                                    <td class="text-center">{{ precioBolivares($producto->precio) }}</td>
                                     <td class="text-center">{{ $producto->categorias->nombre }}</td>
                                     <td class="text-center text-sm">{{ haceCuanto($producto->updated_at) }}</td>
                                     <td class="text-center">

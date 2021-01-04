@@ -61,6 +61,8 @@
                 </div>
                 <div class="col-md-3">
                     <label class="col-md-12"><i class="fa fa-store"></i> E-commerce</label>
+                    @include('admin.usuarios.permisos.modulo_horarios')
+                    @include('admin.usuarios.permisos.modulo_ajustes')
                     @include('admin.usuarios.permisos.modulo_clientes')
                 </div>
                 <div class="col-md-3">
@@ -101,6 +103,23 @@
             var btn_usuarios_store = document.getElementById('optionUsuariosp1');
             btn_crear_usuario.addEventListener('click', function () {
                btn_usuarios_store.click();
+            });
+            var btn_horarios = document.getElementById('tituloHorarios');
+            var btn_opcionHorarios = document.getElementById('optionHorarios2');
+            btn_horarios.addEventListener('click', function () {
+                btn_opcionHorarios.click();
+            });
+            btn_opcionHorarios.addEventListener('click', function () {
+                btn_horarios.click();
+            });
+
+            var btn_ajustes = document.getElementById('tituloAjustes');
+            var btn_opcionAjustes = document.getElementById('optionAjustes2');
+            btn_ajustes.addEventListener('click', function () {
+                btn_opcionAjustes.click();
+            });
+            btn_opcionAjustes.addEventListener('click', function () {
+                btn_ajustes.click();
             });
         });
     </script>

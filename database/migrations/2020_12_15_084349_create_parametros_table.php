@@ -17,7 +17,7 @@ class CreateParametrosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->bigInteger('tabla_id')->unsigned()->nullable();
-            $table->string('valor');
+            $table->string('valor')->nullable();
             $table->timestamps();
         });
     }

@@ -27,8 +27,8 @@
                 </a>
             </li>
             @if (leerJson(Auth::user()->permisos, 'e-commerce') || Auth::user()->role == 100)
-            <li class="nav-item has-treeview lko-clientes.index">
-                <a href="#" class="nav-link lkm-clientes.index">
+            <li class="nav-item has-treeview lko-clientes.index lko-ajustes.index lko-horarios.index">
+                <a href="#" class="nav-link lkm-clientes.index lkm-ajustes.index lkm-horarios.index">
                     <i class="nav-icon fas fa-store"></i>
                     <p>
                         E-commerce
@@ -53,23 +53,26 @@
                     </li>
                 </ul>
                 @endif
+                @if (leerJson(Auth::user()->permisos, 'horarios.index') || Auth::user()->role == 100)
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link lk-">
+                        <a href="{{ route('horarios.index') }}" class="nav-link lk-horarios.index">
                             <i class="fa fa-clock nav-icon"></i>
                             <p>Store Hours</p>
                         </a>
                     </li>
                 </ul>
+                @endif
+                @if (leerJson(Auth::user()->permisos, 'ajustes.index') || Auth::user()->role == 100)
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link lk-">
+                        <a href="{{ route('ajustes.index') }}" class="nav-link lk-ajustes.index">
                             <i class="fa fa-cog nav-icon"></i>
                             <p>Ajustes</p>
                         </a>
                     </li>
                 </ul>
-
+                @endif
             </li>
             @endif
             @if (leerJson(Auth::user()->permisos, 'productos') || Auth::user()->role == 100)

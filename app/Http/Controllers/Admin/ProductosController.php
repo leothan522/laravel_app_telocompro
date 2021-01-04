@@ -18,9 +18,9 @@ class ProductosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $productos = Producto::orderBy('created_at', 'DESC')->paginate(30);
+        $productos = Producto::buscar($request->buscar)->orderBy('created_at', 'DESC')->paginate(30);
         $todos = Producto::count();
         $borrador = Producto::where('estado', 0)->count();
         $publicado = Producto::where('estado', 1)->count();
@@ -77,7 +77,7 @@ class ProductosController extends Controller
 
         //flash('Producto Creado Correctamente', 'success')->important();
         verSweetAlert2('Producto creado correctamente.');
-        if (leerJson(Auth::user()->permisos, 'productos.edit')){
+        if (leerJson(Auth::user()->permisos, 'productos.edit') || Auth::user()->role == 100){
             return redirect()->route('productos.edit', $producto->id);
         }else{
             return redirect()->route('productos.index');

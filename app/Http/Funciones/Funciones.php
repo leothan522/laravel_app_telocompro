@@ -1,6 +1,7 @@
 <?php
 //Funciones Personalizadas para el Proyecto
 
+use App\Models\Parametro;
 use Carbon\Carbon;
 
 function hola()
@@ -185,16 +186,16 @@ function undPeso($i = null)
 //Alertas de sweetAlert2
 function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i class="fa fa-trash-alt"></i>')
 {
-    switch ($alert){
+    switch ($alert) {
         default:
-            alert()->success('¡Éxito!',$mensaje)->persistent(true,false);
-        break;
+            alert()->success('¡Éxito!', $mensaje)->persistent(true, false);
+            break;
         case "iconHtml":
-            alert('¡Éxito!', $mensaje, $type)->iconHtml($icono)->persistent(true,false)->toHtml();
-        break;
+            alert('¡Éxito!', $mensaje, $type)->iconHtml($icono)->persistent(true, false)->toHtml();
+            break;
         case "toast":
             toast($mensaje, $type);
-        break;
+            break;
     }
     /*alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
         alert()->info('InfoAlert','Lorem ipsum dolor sit amet.');
@@ -245,3 +246,92 @@ function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i
 
 }
 
+//Precio en bolivares segun taza del dolar
+function precioBolivares($precio)
+{
+    $resultado = null;
+    $parametros = Parametro::where('nombre', 'precio_dolar')->first();
+    if ($parametros && $precio != null) {
+        $resultado = formatoMillares($precio * $parametros->valor) . ' Bs.';
+    } else {
+        $resultado = "-";
+    }
+    return $resultado;
+}
+
+//Estatus Store Hours
+function estadosHorarios($i = null)
+{
+    $modulo = [
+        '1' => "Habilitar",
+        '0' => "Inhabilitar"
+    ];
+    if (is_null($i)) {
+        return $modulo;
+    } else {
+        return $modulo[$i];
+    }
+}
+
+// Formulario en Store Hours
+function anulazionForzada($i = null)
+{
+    $modulo = [
+        '1' => "Abierto",
+        '0' => "Cerrado",
+    ];
+    if (is_null($i)) {
+        return $modulo;
+    } else {
+        return $modulo[$i];
+    }
+}
+
+//Dias activo en Store Hours
+function showActive($dia)
+{
+    $hoy = date('D');
+    if ($hoy == $dia) {
+        return "show active";
+    } else {
+        return '';
+    }
+}
+//Estado de Tienda Abierto o Cerrada
+function storeHours()
+{
+    $status = true;
+    $horarios = Parametro::where('nombre', 'horarios')->first();
+    if ($horarios && $horarios->valor == 1){
+        $dia = date('D');
+        $open = Parametro::where('nombre', $dia."_open")->first();
+        $closed = Parametro::where('nombre', $dia."_closed")->first();
+        if ($open->valor && $closed->valor){
+            $status = hourIsBetween($open->valor, $closed->valor, date('H:i'));
+        }else{
+            $status = false;
+        }
+    }
+    $anulazion_forzada = Parametro::where('nombre', 'anulazion_forzada')->first();
+    if ($anulazion_forzada && $anulazion_forzada->tabla_id == 1){
+        if ($anulazion_forzada->valor == 1){
+            $status = true;
+        }else{
+            $status = false;
+        }
+    }
+
+    return $status;
+}
+
+//Función comprueba una hora entre un rango
+function hourIsBetween($from, $to, $input) {
+    $dateFrom = DateTime::createFromFormat('!H:i', $from);
+    $dateTo = DateTime::createFromFormat('!H:i', $to);
+    $dateInput = DateTime::createFromFormat('!H:i', $input);
+    if ($dateFrom > $dateTo) $dateTo->modify('+1 day');
+    return ($dateFrom <= $dateInput && $dateInput <= $dateTo) || ($dateFrom <= $dateInput->modify('+1 day') && $dateInput <= $dateTo);
+    /*En la función lo que haremos será pasarle, el desde y el hasta del rango de horas que queremos que se encuentre y el datetime con la hora que nos llega.
+Comprobaremos si la segunda hora que le pasamos es inferior a la primera, con lo cual entenderemos que es para el día siguiente.
+Y al final devolveremos true o false dependiendo si el valor introducido se encuentra entre lo que le hemos pasado.*/
+}

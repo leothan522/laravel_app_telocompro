@@ -160,6 +160,10 @@ class UsersController extends Controller
                     'productos.galeria_delete' => $request->input('productos_edit'),
                     'productos.acciones_lote' => $request->input('productos_edit'),
                     'productos.destroy' => $request->input('productos_destroy'),
+                    'ajustes.index' => $request->input('ajustes_index'),
+                    'ajustes.store' => $request->input('ajustes_index'),
+                    'horarios.index' => $request->input('horarios_index'),
+                    'horarios.store' => $request->input('horarios_index'),
                 ];
                 //******************************************** Usuarios SIDEBAR
                 if ($permisos['usuarios.index']) {
@@ -181,7 +185,7 @@ class UsersController extends Controller
                 }
 
                 //******************************************** E-commerce SIDEBAR
-                if ($permisos['clientes.index']){
+                if ($permisos['clientes.index'] || $permisos['ajustes.index'] || $permisos['horarios.index']){
                     $permisos['e-commerce'] = "true";
                 }else{
                     $permisos['e-commerce'] = null;

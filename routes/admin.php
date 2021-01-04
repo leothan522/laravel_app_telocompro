@@ -38,6 +38,14 @@ Route::middleware(['auth', 'user.status', 'isadmin'])->prefix('/admin')->group(f
         Route::post('/productos/acciones/filtrar', 'Admin\ProductosController@filtrar')->name('productos.filtrar');
         Route::get('/productos/ver/{estado}/productos', 'Admin\ProductosController@ver')->name('productos.ver');
 
+        //Ajustes
+        Route::get('/ajustes', 'Admin\AjustesController@index')->name('ajustes.index');
+        Route::post('/ajustes', 'Admin\AjustesController@store')->name('ajustes.store');
+
+        //Store Hours
+        Route::get('/horarios', 'Admin\StoreHoursController@index')->name('horarios.index');
+        Route::post('/horarios', 'Admin\StoreHoursController@store')->name('horarios.store');
+
     });
 
 });
