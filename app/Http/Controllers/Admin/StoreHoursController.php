@@ -46,7 +46,7 @@ class StoreHoursController extends Controller
         if ($existe){ $domingo_closed = $existe->valor; }else{ $domingo_closed = null; }
         ;
 
-        return view('horarios.index')
+        return view('admin.horarios.index')
             ->with('horarios', $horarios)
             ->with('anulacion_forzada', $anulacion_forzada)
             ->with('valor_anulacion_forzada', $valor_anulacion_forzada)

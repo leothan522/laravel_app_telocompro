@@ -10,16 +10,16 @@
 
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                        <b>Email</b> <a class="float-right">{{ $user->email }}</a>
+                        <b>Email</b> <a class="float-right">{{ Auth::user()->email }}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Rol</b> <a class="float-right">{{ role($user->role) }}</a>
+                        <b>Rol</b> <a class="float-right">{{ role(Auth::user()->role) }}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Estatus</b> <a class="float-right text-danger">{!! status($user->status) !!}</a>
+                        <b>Estatus</b> <a class="float-right text-danger">{!! status(Auth::user()->status) !!}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Registro</b> <a class="float-right">{{ haceCuanto($user->created_at) }}</a>
+                        <b>Registro</b> <a class="float-right">{{ haceCuanto(Auth::user()->created_at) }}</a>
                     </li>
                 </ul>
 

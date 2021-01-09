@@ -70,6 +70,7 @@ class ProductosController extends Controller
             $producto->file_path = date("Y-m-d");
             $producto->imagen = $uploads->getFileName();
         }
+
         $producto->save();
         $categoria = Categoria::find($request->categorias_id);
         $categoria->num_productos = $categoria->num_productos + 1;
@@ -160,6 +161,10 @@ class ProductosController extends Controller
         }
         if (!$request->venta_individual && $individual == 1) {
             $producto->venta_individual = 0;
+        }
+
+        if (!$request->visibilidad){
+            $producto->visibilidad = 0;
         }
 
         if (array_diff_assoc($array_db, $array_form) || $request->hasFile('imagen')) {

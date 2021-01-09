@@ -19,10 +19,11 @@ class Android
     public function handle(Request $request, Closure $next)
     {
         $agent = new Agent();
-        if ($agent->isMobile() || Auth::user()->role == 100){
+        //dd(Auth::user());
+        if (true /*$agent->isMobile()*/ /*|| Auth::user()->role == 1*/){
             return $next($request);
         }else{
-            return redirect('/');
+            return redirect()->route('cerrar');
         }
 
     }

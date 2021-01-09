@@ -1,3 +1,8 @@
+<?php
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header("Content-Type: application/xml; charset=utf-8");
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,6 +12,9 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <title>Ogani | Template</title>
 
     <!-- Google Font -->
@@ -21,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('ogani/css/owl.carousel.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('ogani/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('ogani/css/style.css') }}" type="text/css">
+    @yield('link')
 </head>
 
 <body>
@@ -248,6 +257,7 @@
 <!-- Breadcrumb Section End -->
 
 <!-- Product Section Begin -->
+    @include('sweetalert::alert')
     @yield('content', 'Default Content')
 <!-- Product Section End -->
 
@@ -321,16 +331,19 @@
 
 <!-- Js Plugins -->
 <script src="{{ asset('ogani/js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ asset('ogani/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('ogani/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ asset('ogani/js/bootstrap.min.js') }}"></script>{{--
+<script src="{{ asset('ogani/js/jquery.nice-select.min.js') }}"></script>--}}
 <script src="{{ asset('ogani/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('ogani/js/jquery.slicknav.js') }}"></script>
 <script src="{{ asset('ogani/js/mixitup.min.js') }}"></script>
 <script src="{{ asset('ogani/js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('ogani/js/main.js') }}"></script>
 
+<!-- Sweetalert2-->
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
 
+@yield('script')
 </body>
 
 </html>

@@ -22,32 +22,11 @@
     --}}{{-- FancyBox--}}{{--
     <script src="{{ asset('plugins/fancybox/jquery.fancybox.min.js') }}"></script>
 --}}
+    <!-- InputMask -->
+    <script src="{{ asset('adminlte/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('adminlte/plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
     <script>
-
-        /*jQuery(function ($) {
-            $('.table').footable();
-        });
-
-        function cambiar(){
-            var pdrs = document.getElementById('customFileLang').files[0].name;
-            document.getElementById('info').innerHTML = pdrs;
-        }
-
-        function readImage (input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#blah').attr('src', e.target.result); // Renderizamos la imagen
-                    //$('#blah').attr('class', 'img-thumbnail');
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $("#customFileLang").change(function () {
-            // Código a ejecutar cuando se detecta un cambio de archivO
-            readImage(this);
-        });*/
+        $('[data-mask]').inputmask()
     </script>
 @endsection
 
@@ -79,20 +58,26 @@
                         <div class="card-header">
                             <h5 class="card-title">Ajustes</h5>
                             <div class="card-tools">
-                                <span class="btn btn-tool"><i class="fa fa-cog"></i></span>
+                                <span class="btn btn-tool"><i class="fa fa-dollar-sign"></i></span>
                             </div>
                         </div>
                         <div class="card-body">
 
-                            {!! Form::open(['route' =>  'ajustes.store', 'method' => 'POT', 'id' => 'form1']) !!}
+                            {!! Form::open(['route' =>  'ajustes.store', 'method' => 'POST', 'id' => 'form1']) !!}
 
                             <div class="form-group">
                                 <label for="name">Precio del Dolar</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                        <span class="input-group-text">{{--<i class="fas fa-dollar-sign"></i>--}}Taza actual</span>
                                     </div>
-                                    {!! Form::number('precio_dolar', null, ['class' => 'form-control', 'placeholder' => 'Monto en Bs.',
+                                    <label class="form-control bg-light">{{ formatoMillares($dolar->valor) }} Bs.</label>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text text-bold">Bs.</span>
+                                    </div>
+                                    {!! Form::number('precio_dolar', $dolar->valor, ['class' => 'form-control', 'placeholder' => 'Monto en Bs.',
                                                     'min' => 0, 'pattern' => "^[0-9]+", 'step' => '0.01']) !!}
                                 </div>
                             </div>
@@ -127,7 +112,66 @@
                             @endif
 
                             <div class="form-group text-right">
-                                <input type="submit" class="btn btn-block btn-success" value="Guardar Ajustes">
+                                <input type="hidden" name="id_dolar" value="true">
+                                <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
+                            </div>
+                            <div class="input-group">
+                                @if ($dolar->id)
+                                    <span class="text-danger text-xs">Ultima actualización: {{ haceCuanto($dolar->updated_at) }} por {{ $dolar->usuarios->name }}</span>
+                                @endif
+                            </div>
+
+
+                            {!! Form::close() !!}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-purple">
+                        <div class="card-header">
+                            <h5 class="card-title">Telefono</h5>
+                            <div class="card-tools">
+                                <span class="btn btn-tool"><i class="fa fa-phone-alt"></i></span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                            {!! Form::open(['route' =>  'ajustes.store', 'method' => 'POST', 'id' => 'form1']) !!}
+
+                            <div class="form-group">
+                                <label for="name">Numero</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text text-bold"><i class="fa fa-phone-alt"></i></span>
+                                    </div>
+                                    {!! Form::text('telefono_numero', $telefono_numero->valor, ['class' => 'form-control', 'data-inputmask' => '"mask": "(9999) 999.99.99"', 'data-mask']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Texto a Mostrar</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text text-bold"><i class="fa fa-text-height"></i></span>
+                                    </div>
+                                    {!! Form::text('telefono_texto', $telefono_texto->valor, ['class' => 'form-control', 'placeholder' => 'texto corto']) !!}
+                                </div>
+                            </div>
+                            @if ($errors->any())
+                                <div class="alert alert-warning alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    <h5><i class="icon fas fa-exclamation-triangle"></i></h5>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <div class="form-group text-right">
+                                <input type="hidden" name="id_telefono" value="true">
+                                <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
                             </div>
 
                             {!! Form::close() !!}

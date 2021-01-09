@@ -218,23 +218,34 @@
                                     <td>{{ strtoupper($producto->sku) }}</td>
                                     <td>
                                         @if ($producto->cant_inventario > 0)
-                                            <strong class="text-success">Hay existencias</strong>
+                                            <strong class="text-success badge">Hay existencias</strong>
                                         @else
-                                            <strong class="text-danger">Agotado</strong>
+                                            <strong class="text-danger badge">Agotado</strong>
                                         @endif
                                         <br>({{ formatoMillares($producto->cant_inventario, 0) }})
                                     </td>
                                     <td class="text-center">
                                         @if ($producto->precio != null)
-                                            <i class="fa fa-dollar-sign text-sm"></i>
-                                            {{ formatoMillares($producto->precio) }}
+                                            @if ($producto->visibilidad && $producto->descuento)
+                                                <strong class="text-primary badge">En Oferta</strong><br>
+                                                <i class="fa fa-dollar-sign text-sm"></i>
+                                                {{ formatoMillares($producto->precio - $producto->descuento) }} <br>
+                                                <s class="text-sm text-muted">
+                                                    <i class="fa fa-dollar-sign text-sm"></i>
+                                                    {{ formatoMillares($producto->precio) }}
+                                                    </s>
+                                                @else
+                                                <i class="fa fa-dollar-sign text-sm"></i>
+                                                {{ formatoMillares($producto->precio) }}
+                                            @endif
+
                                         @else
                                             -
                                         @endif
                                     </td>
-                                    <td class="text-center">{{ precioBolivares($producto->precio) }}</td>
+                                    <td class="text-center badge">{{ precioBolivares($producto->precio) }}</td>
                                     <td class="text-center">{{ $producto->categorias->nombre }}</td>
-                                    <td class="text-center text-sm">{{ haceCuanto($producto->updated_at) }}</td>
+                                    <td class="text-center text-xs">{{ haceCuanto($producto->updated_at) }}</td>
                                     <td class="text-center">
                                         {!! Form::open(['route' => ['productos.destroy', $producto->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$producto->id]) !!}
                                         <div class="btn-group">

@@ -56,7 +56,11 @@ Route::middleware('android')->prefix('/android')->group(function (){
     Route::get('/shop/details/', 'Android\AppController@shopDetails')->name('android.shop_detail');
     Route::get('/shop/cart/', 'Android\AppController@shopCart')->name('android.shop_cart');
     Route::get('/shop/checkout/', 'Android\AppController@shopCheckout')->name('android.shop_checkout');
-    Route::get('/shop/home/', 'Android\AppController@shopHome')->name('android.shop_Home');
+    //Route::get('/shop/home/', 'Android\AppController@shopHome')->name('android.shop_Home');
+
+    //Portada
+    Route::get('/shop/home/', 'Android\PortadaController@index')->name('android.shop_Home');
+
 
 });
 

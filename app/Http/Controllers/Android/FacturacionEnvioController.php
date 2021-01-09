@@ -14,12 +14,13 @@ class FacturacionEnvioController extends Controller
     public function autenticar($id)
     {
         $user = User::findOrFail($id);
-        Auth::loginUsingId($user->id, true);
+        return Auth::loginUsingId($user->id, true);
     }
 
     public function getFacturacionEnvio($id)
     {
         $this->autenticar($id);
+        //dd(Auth::user()->role);
         $cliente = Cliente::where('users_id', $id)->first();
         if ($cliente){
             $id_cliente = $cliente->id;

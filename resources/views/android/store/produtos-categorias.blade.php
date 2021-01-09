@@ -4,15 +4,6 @@
     <section class="mt-3">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="float-right">
-                        <div class="m-3">
-                            <a href="{{ route('android.shop_Home')  }}" class="text-primary"><i class="fa fa-arrow-circle-left"></i> Portada</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
                         <div class="sidebar__item">
@@ -29,7 +20,7 @@
                                                 <span>$30.00</span>
                                             </div>
                                         </a>
-                                        {{--<a href="{{ route('android.shop_detail') }}" class="latest-product__item">
+                                        <a href="{{ route('android.shop_detail') }}" class="latest-product__item">
                                             <div class="latest-product__item__pic">
                                                 <img src="{{ asset('ogani/img/latest-product/lp-2.jpg') }}" alt="">
                                             </div>
@@ -46,9 +37,9 @@
                                                 <h6>Crab Pool Security</h6>
                                                 <span>$30.00</span>
                                             </div>
-                                        </a>--}}
+                                        </a>
                                     </div>
-                                    {{--<div class="latest-prdouct__slider__item">
+                                    <div class="latest-prdouct__slider__item">
                                         <a href="{{ route('android.shop_detail') }}" class="latest-product__item">
                                             <div class="latest-product__item__pic">
                                                 <img src="{{ asset('ogani/img/latest-product/lp-1.jpg') }}" alt="">
@@ -76,7 +67,7 @@
                                                 <span>$30.00</span>
                                             </div>
                                         </a>
-                                    </div>--}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -85,7 +76,7 @@
                 <div class="col-lg-9 col-md-7">
                     <div class="product__discount">
                         <div class="section-title product__discount__title">
-                            <h2>Venta de descuento</h2>
+                            <h2>Sale Off</h2>
                         </div>
                         <div class="row">
                             <div class="product__discount__slider owl-carousel">
@@ -213,7 +204,7 @@
                             </div>--}}
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
-                                    <h6><span>16</span> Productos encontrados</h6>
+                                    <h6><span>16</span> Products found</h6>
                                 </div>
                             </div>
                             {{--<div class="col-lg-4 col-md-3">

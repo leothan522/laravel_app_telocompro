@@ -13,15 +13,13 @@ class AppController extends Controller
     public function autenticar($id)
     {
         $user = User::findOrFail($id);
-        Auth::loginUsingId($user->id, true);
+        return Auth::loginUsingId($user->id, true);
     }
 
     public function getEscritorio($id)
     {
         $this->autenticar($id);
-        $user = User::find($id);
-        return view('android.cuenta.escritorio')
-            ->with('user', $user);
+        return view('android.cuenta.escritorio');
     }
 
     public function shopGrid()
@@ -36,16 +34,20 @@ class AppController extends Controller
 
     public function shopCart()
     {
+        //dd(100);
         return view('android.ogani.shoping-cart');
     }
 
     public function shopCheckout()
     {
+        //dd
         return view('android.ogani.checkout');
     }
 
     public function shopHome()
     {
+        //$this->autenticar(1);
+        //dd(2);
         return view('android.ogani.shop-home');
     }
 

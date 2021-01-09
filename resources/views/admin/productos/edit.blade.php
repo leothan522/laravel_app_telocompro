@@ -324,12 +324,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Visibilidad</label>
+                                <label for="exampleInputEmail1">En Oferta <span class="text-xs text-danger">(descuento)</span></label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-eye"></i></span>
+                                        <span class="input-group-text">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="visibilidad" value="1" @if($producto->visibilidad) checked @endif class="custom-control-input" id="customCheck1">
+                                            <label class="custom-control-label" for="customCheck1"><i class="fas fa-dollar-sign"></i></label>
+                                        </div>
+                                        </span>
                                     </div>
-                                    {!! Form::select('visibilidad', visibilidadProducto() , $producto->visibilidad , ['class' => 'custom-select', 'required']) !!}
+                                    {{--{!! Form::select('visibilidad', visibilidadProducto() , 0 , ['class' => 'custom-select', 'required']) !!}
+                                    --}}{!! Form::number('descuento', $producto->descuento, ['class' => 'form-control', 'placeholder' => 'Descuento',
+                                                    'min' => 0, 'pattern' => "^[0-9]+", 'step' => '0.01']) !!}
                                 </div>
                             </div>
 
