@@ -13,9 +13,9 @@ class PortadaController extends Controller
     public function index()
     {
         $exite = Parametro::where('nombre', 'telefono_numero')->first();
-        if ($exite){ $telefono_numero = $exite; }else{ $telefono_numero = "(0424) 338.66.00"; }
+        if ($exite){ $telefono_numero = $exite->valor; }else{ $telefono_numero = "(0424) 338.66.00"; }
         $exite = Parametro::where('nombre', 'telefono_texto')->first();
-        if ($exite){ $telefono_texto = $exite; }else{ $telefono_texto = "support 24/7 time"; }
+        if ($exite){ $telefono_texto = $exite->valor; }else{ $telefono_texto = "support 24/7 time"; }
 
         $categorias = Categoria::orderBy('num_productos', 'DESC')->get();
         $ultimos_productos = Producto::where('estado', 1)->orderBy('updated_at', 'DESC')->paginate(6);

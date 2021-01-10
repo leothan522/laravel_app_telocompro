@@ -41,8 +41,8 @@
                                 <i class="fa fa-phone"></i>
                             </div>
                             <div class="hero__search__phone__text">
-                                <h5>{{ $telefono_numero->valor }}</h5>
-                                <span>{{ $telefono_texto->valor }}</span>
+                                <h5>{{ $telefono_numero }}</h5>
+                                <span>{{ $telefono_texto }}</span>
                             </div>
                         </div>
                     </div>
