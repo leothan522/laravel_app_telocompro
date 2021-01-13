@@ -16,4 +16,9 @@ class Parametro extends Model
         return $this->belongsTo(User::class, 'tabla_id', 'id');
     }
 
+    public function productos()
+    {
+        return $this->belongsTo(Producto::class, 'valor', 'id');
+    }
+
 }

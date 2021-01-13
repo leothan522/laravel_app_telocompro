@@ -47,19 +47,27 @@ Route::get('/perfil', function () {
 //*************************************************** Rutas App Android
 Route::middleware('android')->prefix('/android')->group(function (){
 
-    Route::get('/facturacion-envio/{id}', 'Android\FacturacionEnvioController@getFacturacionEnvio')->name('android.get_facturacion');
-    Route::post('/facturacion-envio/{id}', 'Android\FacturacionEnvioController@postFacturacionEnvio')->name('android.post_facturacion');
-    Route::get('/escritorio/{id}', 'Android\AppController@getEscritorio')->name('android.get_escritorio');
-
     //Plantilla Ogani
     Route::get('/shop/grid/', 'Android\AppController@shopGrid')->name('android.shop_grid');
     Route::get('/shop/details/', 'Android\AppController@shopDetails')->name('android.shop_detail');
     Route::get('/shop/cart/', 'Android\AppController@shopCart')->name('android.shop_cart');
     Route::get('/shop/checkout/', 'Android\AppController@shopCheckout')->name('android.shop_checkout');
-    //Route::get('/shop/home/', 'Android\AppController@shopHome')->name('android.shop_Home');
+    Route::get('/shop/home/', 'Android\AppController@shopHome')->name('android.shop_Home');
 
-    //Portada
-    Route::get('/shop/home/', 'Android\PortadaController@index')->name('android.shop_Home');
+    // Rutas APP
+    Route::get('/ruta/no/definida', function () {
+        return view('android.prueba');
+    })->name('android.no_definida');
+    //Principales
+    Route::get('/facturacion-envio/{id}', 'Android\FacturacionController@index')->name('android.facturacion.index');
+    Route::post('/facturacion-envio/{id}', 'Android\FacturacionController@update')->name('android.facturacion.update');
+    Route::get('/store/{id}', 'Android\StoreController@index')->name('android.store.index');
+    Route::get('/categorias/{id}/{categoria}/{store?}', 'Android\StoreController@categorias')->name('android.categorias');
+    Route::get('/detalles/{id}/{producto}', 'Android\StoreController@detalles')->name('android.detalles');
+    Route::get('/favoritos/{id}', 'Android\StoreController@favoritos')->name('android.favoritos');
+
+    //Rutas AJAX
+    Route::post('/ajax/favoritos', 'Android\StoreController@ajaxFavoritos')->name('ajax.favoritos');
 
 
 });

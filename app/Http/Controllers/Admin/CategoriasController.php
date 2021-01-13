@@ -57,7 +57,7 @@ class CategoriasController extends Controller
 
         $categoria = new Categoria($request->all());
         $categoria->nombre = ucwords(e($request->nombre));
-        $categoria->slug = Str::slug($request->nombre);
+        $categoria->slug = Str::slug($request->nombre.' '.rand(1, 999));
         $categoria->modulo = $request->modulo;
         if ($request->hasFile('imagen')) {
             $categoria->file_path = date('Y-m-d');
@@ -127,6 +127,7 @@ class CategoriasController extends Controller
         }
 
         $categoria->nombre = ucwords(e($request->nombre));
+        $categoria->slug = Str::slug($request->nombre.' '.rand(1, 999));
         $categoria->modulo = $request->modulo;
         if ($request->hasFile('imagen')) {
             $categoria->file_path = date('Y-m-d');

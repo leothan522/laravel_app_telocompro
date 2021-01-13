@@ -5,22 +5,13 @@ namespace App\Http\Controllers\Android;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Android\FacturacionEnvioRequest;
 use App\Models\Cliente;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class FacturacionEnvioController extends Controller
+class FacturacionController extends Controller
 {
-    public function autenticar($id)
+    public function index($id)
     {
-        $user = User::findOrFail($id);
-        return Auth::loginUsingId($user->id, true);
-    }
-
-    public function getFacturacionEnvio($id)
-    {
-        $this->autenticar($id);
-        //dd(Auth::user()->role);
+        $autenticar = new AppController();
+        $autenticar->autenticar($id);
         $cliente = Cliente::where('users_id', $id)->first();
         if ($cliente){
             $id_cliente = $cliente->id;
@@ -47,7 +38,7 @@ class FacturacionEnvioController extends Controller
             $class = "btn-success";
             $opcion = "save";
         }
-        return view('android.cuenta.facturacion_envio')
+        return view('android.facturacion.index')
             ->with('id_cliente', $id_cliente)
             ->with('cedula', $cedula)
             ->with('nombre', $nombre)
@@ -61,14 +52,14 @@ class FacturacionEnvioController extends Controller
             ->with('opcion', $opcion);
     }
 
-    public function postFacturacionEnvio(FacturacionEnvioRequest $request, $id)
+    public function update(FacturacionEnvioRequest $request, $id)
     {
         $opcion = $request->opcion;
         if ($opcion == "save"){
             $cliente = new Cliente($request->all());
             $cliente->users_id = $id;
             $cliente->save();
-            $class = "success";
+            verSweetAlert2('Datos guardados correctamente.');
         }else{
             $cliente = Cliente::find($request->id_cliente);
             $array_db = $cliente->toArray();
@@ -93,7 +84,8 @@ class FacturacionEnvioController extends Controller
                 $cliente->update();
                 verSweetAlert2('Datos guardados correctamente.');
             }else{
-                verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
+                //verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
+                verSweetAlert2('No se realizo ningun cambio.', 'android', 'warning');
             }
 
         }

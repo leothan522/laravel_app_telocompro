@@ -49,7 +49,7 @@
         </div>
         --}}<div class="card-body">
 
-            {!! Form::open(['route' => ['android.post_facturacion', Auth::user()->id], 'method' => 'post']) !!}
+            {!! Form::open(['route' => ['android.facturacion.update', Auth::user()->id], 'method' => 'post']) !!}
 
             <div class="form-group">
                 <label for="name">{{ __('Cedula') }}</label>

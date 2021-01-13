@@ -243,7 +243,13 @@
                                             -
                                         @endif
                                     </td>
-                                    <td class="text-center badge">{{ precioBolivares($producto->precio) }}</td>
+                                    <td class="text-center badge">
+                                        @if ($producto->visibilidad && $producto->descuento)
+                                            {{ precioBolivares($producto->precio - $producto->descuento) }}
+                                        @else
+                                            {{ precioBolivares($producto->precio) }}
+                                        @endif
+                                    </td>
                                     <td class="text-center">{{ $producto->categorias->nombre }}</td>
                                     <td class="text-center text-xs">{{ haceCuanto($producto->updated_at) }}</td>
                                     <td class="text-center">

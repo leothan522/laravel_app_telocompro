@@ -25,6 +25,11 @@ class Producto extends Model
         return $this->hasMany(Galeria::class, 'productos_id', 'id');
     }
 
+    public function parametros()
+    {
+        return $this->hasMany(Parametro::class, 'valor', 'id');
+    }
+
     public function scopeBuscar($query, $name)
     {
         return $query->where('nombre', 'LIKE', "%$name%");

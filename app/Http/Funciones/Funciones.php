@@ -195,7 +195,24 @@ function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i
             break;
         case "toast":
             toast($mensaje, $type);
-            break;
+        break;
+        case "android":
+            switch ($type){
+                default:
+                    alert()->success($mensaje)->toToast();
+                break;
+                case "info":
+                    alert()->info($mensaje)->toToast();
+                break;
+                case "warning":
+                    alert()->warning($mensaje)->toToast();
+                break;
+                case "error":
+                    alert()->error($mensaje)->toToast();
+                break;
+            }
+
+        break;
     }
     /*alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
         alert()->info('InfoAlert','Lorem ipsum dolor sit amet.');

@@ -16,12 +16,6 @@ class AppController extends Controller
         return Auth::loginUsingId($user->id, true);
     }
 
-    public function getEscritorio($id)
-    {
-        $this->autenticar($id);
-        return view('android.cuenta.escritorio');
-    }
-
     public function shopGrid()
     {
         return view('android.ogani.shop-grid');

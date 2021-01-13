@@ -8,13 +8,23 @@
         </li>
         <li class="dropdown-divider"></li>
         <li class="nav-item">
-            <a href="{{ route('android.get_facturacion', Auth::user()->id) }}" class="nav-link" target="_blank">
-                {{--<i class="far fa-envelope"></i>--}} Facturación y Envio
+            <a href="{{ route('android.facturacion.index', Auth::user()->id) }}" class="nav-link" target="_blank">
+                <i class="fa fa-address-card"></i> Facturación y Envio
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('android.get_escritorio', Auth::user()->id) }}" class="nav-link" target="_blank">
-                {{--<i class="far fa-envelope"></i>--}} Escritorio
+            <a href="{{ route('android.store.index', Auth::user()->id) }}" class="nav-link" target="_blank">
+                <i class="fa fa-store-alt"></i> Store
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('android.favoritos', Auth::user()->id) }}" class="nav-link" target="_blank">
+                <i class="fa fa-heart"></i> Favoritos
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('android.no_definida', Auth::user()->id) }}" class="nav-link" target="_blank">
+                <i class="fa fa-store-alt"></i> No Definida
             </a>
         </li>
         <li class="dropdown-divider"></li>
