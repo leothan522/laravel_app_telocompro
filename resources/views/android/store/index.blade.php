@@ -337,7 +337,12 @@
                                     </li>
                                     <li><a href="{{ route('android.detalles', [Auth::user()->id, $producto->id]) }}"><i
                                                 class="fa fa-eye"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            <span class="num_carrito">3</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="featured__item__text">
@@ -515,7 +520,7 @@
                     Swal.fire({
                         toast: true,
                         title: data.message,
-                        //text: "Bienvenido, puedes empezar a comprar.",
+                        //text: data.message,
                         icon: data.type,
                         //showConfirmButton: false,
                         //confirmButtonColor: '#3085d6',
