@@ -1,6 +1,7 @@
 @extends('layouts.android.master-ogani')
 
 @section('content')
+    @if (!$favoritos->isEmpty())
     <section class="mt-3">
         <div class="container">
             <div class="row">
@@ -12,16 +13,25 @@
                                 <div class="latest-product__slider owl-carousel">
                                     @php($primero = [])
                                     @foreach ($favoritos as $parametro)
-                                        @if ($parametro->productos->visibilidad && $parametro->productos->descuento)
-                                            @php($precio = '
-                                                <span>$'.formatoMillares($parametro->productos->precio - $parametro->productos->descuento).'</span>
-                                                <span>'.precioBolivares($parametro->productos->precio - $parametro->productos->descuento).'</span>
-                                            ')
+                                        @if ($parametro->productos->precio <= 0 || !$parametro->productos->estado)
+                                            @continue(true)
+                                        @endif
+                                        @if ($parametro->productos->cant_inventario)
+                                            @if ($parametro->productos->visibilidad && $parametro->productos->descuento)
+                                                @php($precio = '
+                                                    <span>$'.formatoMillares($parametro->productos->precio - $parametro->productos->descuento).'</span>
+                                                    <span>'.precioBolivares($parametro->productos->precio - $parametro->productos->descuento).'</span>
+                                                ')
+                                            @else
+                                                @php($precio = '
+                                                    <span>$'.formatoMillares($parametro->productos->precio).'</span>
+                                                    <span>'.precioBolivares($parametro->productos->precio).'</span>
+                                                ')
+                                            @endif
                                         @else
                                             @php($precio = '
-                                                <span>$'.formatoMillares($parametro->productos->precio).'</span>
-                                                <span>'.precioBolivares($parametro->productos->precio).'</span>
-                                            ')
+                                                    <span class="text-danger">Producto agotado</span>
+                                                ')
                                         @endif
                                         @if (true /*$i <= 3*/)
                                             @php($primero[$i] = '
@@ -51,6 +61,7 @@
                                         @php($i++)
 
                                     @endforeach
+                                    @if (!empty($primero))
                                     <div class="latest-prdouct__slider__item">
                                         @for ($j = 1; $j <= count($primero); $j++)
                                             {!!  $primero[$j]  !!}
@@ -83,6 +94,10 @@
                                             </div>
                                         </a>--}}
                                     </div>
+                                        @php($hero = false)
+                                        @else
+                                        @php($hero = true)
+                                    @endif
                                     {{--@if (isset($segundo))
                                         <div class="latest-prdouct__slider__item">
                                             @for ($j = 4; $j <= count($segundo) + 3; $j++)
@@ -127,5 +142,41 @@
             </div>
         </div>
     </section>
+    @else
+        @php($hero = true)
+    @endif
+    @if ($hero)
+        <!-- Hero Section Begin -->
+        <section class="hero">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="hero__search">
+                            {{--<div class="hero__search__phone">
+                                <div class="hero__search__phone__icon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div class="hero__search__phone__text">
+                                    <h5>{{ $telefono_numero }}</h5>
+                                    <span>{{ $telefono_texto }}</span>
+                                </div>
+                            </div>--}}
+                        </div>
+                        <div class="hero__item set-bg" data-setbg="{{ asset('img/banner_2.png') }}">
+                            <div class="hero__text">
+                                <span>#TELOCOMPRO</span>
+                                <h2>{{--Frase <br/>Publicitaria--}}</h2>
+                                <p>¡Aún no tienes favoritos!</p>
+                                <a href="{{ route('android.store.index', Auth::user()->id) }}" id="btn_statusHours" class="btn btn-info">
+                                    <strong style="color: white;">{{--<i class="icon fa fa-exclamation-circle"></i>--}} Ir a Store</strong>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Hero Section End -->
+    @endif
 @endsection
 

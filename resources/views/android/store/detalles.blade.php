@@ -14,7 +14,7 @@
         </div>--}}
     <section>
         <div class="container">
-            <div class="row">
+            {{--<div class="row">
                 <div class="col-lg-12">
                     <div class="float-right">
                         <div class="m-3">
@@ -22,9 +22,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
             <div class="row">
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-6 col-md-6 mt-3">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item img-thumbnail">
                             <img class="product__details__pic__item--large"
@@ -62,16 +62,21 @@
                             <span>(18 reviews)</span>
                         </div>
                         <div class="product__details__price">
-                            @if ($producto->visibilidad && $producto->descuento)
-                                <span>$</span>{{ formatoMillares($producto->precio - $producto->descuento) }}
-                                <small class="text-muted"><small><s>${{ formatoMillares($producto->precio) }}</s></small></small><br/>
-                                {{ precioBolivares($producto->precio - $producto->descuento) }}
-                                @else
-                                <span>$</span>{{ formatoMillares($producto->precio) }}<br/>
-                                {{ precioBolivares($producto->precio) }}
+                            @if ($producto->cant_inventario)
+                                @if ($producto->visibilidad && $producto->descuento)
+                                    <span>$</span>{{ formatoMillares($producto->precio - $producto->descuento) }}
+                                    <small class="text-muted"><small><s>${{ formatoMillares($producto->precio) }}</s></small></small><br/>
+                                    {{ precioBolivares($producto->precio - $producto->descuento) }}
+                                    @else
+                                    <span>$</span>{{ formatoMillares($producto->precio) }}<br/>
+                                    {{ precioBolivares($producto->precio) }}
+                                @endif
+                            @else
+                                <span>Producto Agotado</span>
                             @endif
                         </div>
                         {!! $producto->descripcion !!}
+                        @if ($producto->cant_inventario)
                         <div class="row">
                         <div class="product__details__quantity">
                             <div class="quantity">
@@ -87,6 +92,7 @@
                                 <span class="icon_heart_alt"></span>
                             </a>
                         </div>
+                        @endif
                         <ul>
                             <li><b>SKU</b> <span>{{ $producto->sku }}</span></li>
                             <li><b>Inventario</b> <span>{{ formatoMillares($producto->cant_inventario, 0) }}</span></li>
@@ -207,7 +213,7 @@
             <div class="col-lg-12">
                 <div class="float-left">
                     <div class="m-3">
-                        <a href="{{ route('android.store.index', Auth::user()->id) }}" class="text-primary"><i class="fa fa-arrow-circle-left"></i> Store</a>
+                        <a href="{{ route('android.store.index', Auth::user()->id) }}" class="text-primary"><i class="fa fa-arrow-circle-left"></i> Ir a Store</a>
                     </div>
                 </div>
             </div>
@@ -216,7 +222,7 @@
 @endsection
 
 @section('script')
-    <script>
+    <script type="text/javascript">
 
         $.ajaxSetup({
             headers: {

@@ -66,6 +66,9 @@ class ProductosController extends Controller
         $producto = new Producto($request->all());
         $producto->sku = strtoupper($request->sku);
         $producto->slug = Str::slug($request->nombre);
+        if ($request->precio <= $request->descuento){
+            $producto->visibilidad = 0;
+        }
         if ($request->hasFile('imagen')) {
             $producto->file_path = date("Y-m-d");
             $producto->imagen = $uploads->getFileName();
@@ -166,6 +169,11 @@ class ProductosController extends Controller
         if (!$request->visibilidad){
             $producto->visibilidad = 0;
         }
+
+        if ($request->precio <= $request->descuento){
+            $producto->visibilidad = 0;
+        }
+
 
         if (array_diff_assoc($array_db, $array_form) || $request->hasFile('imagen')) {
             if ($db_categoria != $request->categorias_id){

@@ -72,7 +72,8 @@
         navText: ["<span class='fa fa-angle-left'><span/>", "<span class='fa fa-angle-right'><span/>"],
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
-        smartSpeed: 1200,
+        //smartSpeed: 1200,
+        smartSpeed: 1700,
         autoHeight: false,
         autoplay: true,
         responsive: {

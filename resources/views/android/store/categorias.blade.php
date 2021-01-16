@@ -3,7 +3,7 @@
 @section('content')
     <section class="mt-3">
         <div class="container">
-            @if (!$store)
+            @if (false /*!$store*/)
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="float-right">
@@ -15,7 +15,8 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-lg-3 col-md-5">
+                <div class="col-lg-3 col-md-5 mt-3">
+                    @if (!$ultimos_productos->isEmpty())
                     <div class="sidebar">
                         <div class="sidebar__item">
                             <div class="latest-product__text">
@@ -23,16 +24,23 @@
                                 <div class="latest-product__slider owl-carousel">
                                     @php($primero = [])
                                     @foreach ($ultimos_productos as $producto)
-                                        @if ($producto->visibilidad && $producto->descuento)
-                                            @php($precio = '
-                                                <span>$'.formatoMillares($producto->precio - $producto->descuento).'</span>
-                                                <span>'.precioBolivares($producto->precio - $producto->descuento).'</span>
-                                            ')
+
+                                        @if ($producto->cant_inventario)
+                                            @if ($producto->visibilidad && $producto->descuento)
+                                                @php($precio = '
+                                                    <span>$'.formatoMillares($producto->precio - $producto->descuento).'</span>
+                                                    <span>'.precioBolivares($producto->precio - $producto->descuento).'</span>
+                                                ')
+                                            @else
+                                                @php($precio = '
+                                                    <span>$'.formatoMillares($producto->precio).'</span>
+                                                    <span>'.precioBolivares($producto->precio).'</span>
+                                                ')
+                                            @endif
                                         @else
                                             @php($precio = '
-                                                <span>$'.formatoMillares($producto->precio).'</span>
-                                                <span>'.precioBolivares($producto->precio).'</span>
-                                            ')
+                                                    <span class="text-danger">Producto agotado</span>
+                                                ')
                                         @endif
                                         @if ($i <= 3)
                                             @php($primero[$i] = '
@@ -134,6 +142,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
                 <div class="col-lg-9 col-md-7">
                     @if (!$en_oferta->isEmpty())
@@ -157,7 +166,12 @@
                                                             </a>
                                                         </li>
                                                         <li><a href="{{ route('android.detalles', [Auth::user()->id, $producto->id]) }}"><i class="fa fa-eye"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                        <li>
+                                                            <a href="#" content="{{ $producto->id }}"
+                                                               class="btn_carrito  carrito_{{ $producto->id }} @if ($producto->carrito) fondo-favoritos @endif">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <div class="product__discount__item__text">
@@ -268,7 +282,7 @@
                             </div>
                         </div>
                     @endif
-
+                    @if (!$productos->isEmpty())
                     <div class="filter__item">
                         <div class="row">
                             {{--<div class="col-lg-4 col-md-5">
@@ -307,17 +321,27 @@
                                                 </a>
                                             </li>
                                             <li><a href="{{ route('android.detalles', [Auth::user()->id, $producto->id]) }}"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li>
+                                                <a href="#" id="carrito_{{ $producto->id }}" content="{{ $producto->id }}"
+                                                   class="btn_carrito @if ($producto->carrito) fondo-favoritos @endif">
+                                                   <i class="fa fa-shopping-cart"></i>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
                                         <h6><a href="{{ route('android.detalles', [Auth::user()->id, $producto->id]) }}">{{ ucwords($producto->nombre) }}</a></h6>
-                                        @if ($producto->visibilidad && $producto->descuento)
-                                            <h5>${{ formatoMillares($producto->precio - $producto->descuento) }}</h5>
-                                            <h5>{{ precioBolivares($producto->precio - $producto->descuento) }}</h5>
+                                        @if ($producto->cant_inventario)
+                                            @if ($producto->visibilidad && $producto->descuento)
+                                                <h5>${{ formatoMillares($producto->precio - $producto->descuento) }}</h5>
+                                                <h5>{{ precioBolivares($producto->precio - $producto->descuento) }}</h5>
+                                            @else
+                                                <h5>${{ formatoMillares($producto->precio) }}</h5>
+                                                <h5>{{ precioBolivares($producto->precio) }}</h5>
+                                            @endif
                                         @else
-                                            <h5>${{ formatoMillares($producto->precio) }}</h5>
-                                            <h5>{{ precioBolivares($producto->precio) }}</h5>
+                                            {{--<h5>${{ formatoMillares($producto->precio) }}</h5>--}}
+                                            <h5 class="text-danger">Producto agotado</h5>
                                         @endif
                                     </div>
                                 </div>
@@ -499,6 +523,22 @@
                         <a href="#">3</a>
                         <a href="#"><i class="fa fa-long-arrow-right"></i></a>
                     </div>--}}
+
+                    @else
+
+                        <div class="banner mt-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="banner__pic">
+                                            <img src="{{ asset('img/store/banner_inventario.png') }}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                    @endif
                 </div>
             </div>
         </div>
@@ -506,7 +546,7 @@
 @endsection
 
 @section('script')
-    <script>
+    <script type="text/javascript">
 
         $.ajaxSetup({
             headers: {
@@ -557,6 +597,48 @@
                         }
                         document.getElementById(data.id).classList.remove('fondo-favoritos');
                     }
+
+                }
+            });
+        });
+
+        $(".btn_carrito").click(function(e){
+            e.preventDefault();
+            Swal.fire({
+                toast: true,
+                //title: 'Cargando...',
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                showConfirmButton: false,
+            });
+            var producto = this.getAttribute('content');
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('ajax.carrito') }}",
+                data: {id_producto:producto},
+                success: function (data) {
+                    Swal.fire({
+                        //toast: true,
+                        icon: data.type,
+                        title: data.title,
+                        //text: data.message,
+                        html: data.message,
+                        //showConfirmButton: false,
+                        //confirmButtonColor: '#3085d6',
+                    });
+                    if(data.type === "success"){
+                        var oferta = document.getElementsByClassName(data.clase);
+                        if(oferta){
+                            for (var i = 0; i<oferta.length; i++) {
+                                oferta[i].classList.add('fondo-favoritos');
+                            }
+                        }
+                        document.getElementById(data.id).classList.add('fondo-favoritos');
+                    }/*else{
+                        document.getElementById(data.id).classList.remove('fondo-favoritos');
+                    }*/
 
                 }
             });

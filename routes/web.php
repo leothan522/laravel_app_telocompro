@@ -65,9 +65,11 @@ Route::middleware('android')->prefix('/android')->group(function (){
     Route::get('/categorias/{id}/{categoria}/{store?}', 'Android\StoreController@categorias')->name('android.categorias');
     Route::get('/detalles/{id}/{producto}', 'Android\StoreController@detalles')->name('android.detalles');
     Route::get('/favoritos/{id}', 'Android\StoreController@favoritos')->name('android.favoritos');
+    Route::get('/carrito/{id}', 'Android\StoreController@carrito')->name('android.carrito');
 
     //Rutas AJAX
     Route::post('/ajax/favoritos', 'Android\StoreController@ajaxFavoritos')->name('ajax.favoritos');
+    Route::post('/ajax/carrito', 'Android\StoreController@ajaxCarrito')->name('ajax.carrito');
 
 
 });

@@ -225,7 +225,7 @@
                                         <br>({{ formatoMillares($producto->cant_inventario, 0) }})
                                     </td>
                                     <td class="text-center">
-                                        @if ($producto->precio != null)
+                                        @if ($producto->precio > 0)
                                             @if ($producto->visibilidad && $producto->descuento)
                                                 <strong class="text-primary badge">En Oferta</strong><br>
                                                 <i class="fa fa-dollar-sign text-sm"></i>
@@ -244,10 +244,12 @@
                                         @endif
                                     </td>
                                     <td class="text-center badge">
-                                        @if ($producto->visibilidad && $producto->descuento)
-                                            {{ precioBolivares($producto->precio - $producto->descuento) }}
-                                        @else
-                                            {{ precioBolivares($producto->precio) }}
+                                        @if ($producto->precio > 0)
+                                            @if ($producto->visibilidad && $producto->descuento)
+                                                {{ precioBolivares($producto->precio - $producto->descuento) }}
+                                            @else
+                                                {{ precioBolivares($producto->precio) }}
+                                            @endif
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $producto->categorias->nombre }}</td>

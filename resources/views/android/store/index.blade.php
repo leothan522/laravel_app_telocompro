@@ -25,10 +25,10 @@
                     </div>
                     <div class="hero__item set-bg" data-setbg="{{ asset('img/banner_2.png') }}">
                         <div class="hero__text">
-                            <span>TE LO COMPRO</span>
-                            <h2>Frase <br/>Publicitaria</h2>
+                            <span>#TELOCOMPRO</span>
+                            <h2>{{--Frase <br/>Publicitaria--}}</h2>
                             <p>Delivery Disponible</p>
-                            <a href="#" id="btn_statusHours" @if(storeHours())
+                            <a href="#" id="btn_statusHours" @if(storeHours() && !$productos->isEmpty())
                             class="btn btn-success"
                                onclick="storeHours('¡Abierto!', 'Bienvenido, puedes empezar a comprar.', 'success')"
                                @else
@@ -36,7 +36,7 @@
                                onclick="storeHours('¡Cerrado!', 'Lo sentimos, por ahora estamos descansando. Intentalo mas tarde.', 'warning')"
                                 @endif
                             >
-                                <strong>@if(storeHours()) <i class="icon fa fa-check"></i> ¡Abierto! @else <i
+                                <strong>@if(storeHours() && !$productos->isEmpty()) <i class="icon fa fa-check"></i> ¡Abierto! @else <i
                                         class="icon fa fa-lock"></i> ¡Cerrado! @endif</strong>
                             </a>
                         </div>
@@ -108,16 +108,22 @@
                             <div class="latest-product__slider owl-carousel">
                                 @php($primero = [])
                                 @foreach ($ultimos_productos as $producto)
-                                    @if ($producto->visibilidad && $producto->descuento)
-                                        @php($precio = '
-                                            <span>$'.formatoMillares($producto->precio - $producto->descuento).'</span>
-                                            <span>'.precioBolivares($producto->precio - $producto->descuento).'</span>
-                                        ')
+                                    @if ($producto->cant_inventario)
+                                        @if ($producto->visibilidad && $producto->descuento)
+                                            @php($precio = '
+                                                <span>$'.formatoMillares($producto->precio - $producto->descuento).'</span>
+                                                <span>'.precioBolivares($producto->precio - $producto->descuento).'</span>
+                                            ')
+                                        @else
+                                            @php($precio = '
+                                                <span>$'.formatoMillares($producto->precio).'</span>
+                                                <span>'.precioBolivares($producto->precio).'</span>
+                                            ')
+                                        @endif
                                     @else
                                         @php($precio = '
-                                            <span>$'.formatoMillares($producto->precio).'</span>
-                                            <span>'.precioBolivares($producto->precio).'</span>
-                                        ')
+                                                <span class="text-danger">Producto agotado</span>
+                                            ')
                                     @endif
 
                                     @if ($i <= 3)
@@ -301,6 +307,7 @@
     @endif
 
     <!-- Featured Section Begin -->
+    @if (!$productos->isEmpty())
     <section class="featured spad">
         <div class="container">
             <div class="row">
@@ -338,9 +345,9 @@
                                     <li><a href="{{ route('android.detalles', [Auth::user()->id, $producto->id]) }}"><i
                                                 class="fa fa-eye"></i></a></li>
                                     <li>
-                                        <a href="#">
+                                        <a href="#" id="carrito_{{ $producto->id }}" content="{{ $producto->id }}"
+                                           class="btn_carrito @if ($producto->carrito) fondo-favoritos @endif">
                                             <i class="fa fa-shopping-cart"></i>
-                                            <span class="num_carrito">3</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -349,13 +356,19 @@
                                 <h6>
                                     <a href="{{ route('android.detalles', [Auth::user()->id, $producto->id]) }}">{{ ucwords($producto->nombre) }}</a>
                                 </h6>
-                                @if ($producto->visibilidad && $producto->descuento)
-                                    <h5>${{ formatoMillares($producto->precio - $producto->descuento) }}</h5>
-                                    <h5>{{ precioBolivares($producto->precio - $producto->descuento) }}</h5>
+                                @if ($producto->cant_inventario)
+                                    @if ($producto->visibilidad && $producto->descuento)
+                                        <h5>${{ formatoMillares($producto->precio - $producto->descuento) }}</h5>
+                                        <h5>{{ precioBolivares($producto->precio - $producto->descuento) }}</h5>
+                                    @else
+                                        <h5>${{ formatoMillares($producto->precio) }}</h5>
+                                        <h5>{{ precioBolivares($producto->precio) }}</h5>
+                                    @endif
                                 @else
-                                    <h5>${{ formatoMillares($producto->precio) }}</h5>
-                                    <h5>{{ precioBolivares($producto->precio) }}</h5>
+                                    {{--<h5>${{ formatoMillares($producto->precio) }}</h5>--}}
+                                    <h5 class="text-danger">Producto agotado</h5>
                                 @endif
+
                             </div>
                         </div>
                     </div>
@@ -470,12 +483,30 @@
     </section>
     <!-- Featured Section End -->
 
+    @else
+
+        <div class="banner mt-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="banner__pic">
+                            <img src="{{ asset('img/store/banner_inventario.png') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+
+    @endif
+
+
 
 
 @endsection
 
 @section('script')
-    <script>
+    <script type="text/javascript">
         /*$(document).on("click", "#btn_statusHours", function(e) {
             e.preventDefault();
             Swal.fire({
@@ -530,6 +561,43 @@
                     }else{
                         document.getElementById(data.id).classList.remove('fondo-favoritos');
                     }
+
+                }
+            });
+        });
+
+
+        $(".btn_carrito").click(function(e){
+            e.preventDefault();
+            Swal.fire({
+                toast: true,
+                //title: 'Cargando...',
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                showConfirmButton: false,
+            });
+            var producto = this.getAttribute('content');
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('ajax.carrito') }}",
+                data: {id_producto:producto},
+                success: function (data) {
+                    Swal.fire({
+                        //toast: true,
+                        icon: data.type,
+                        title: data.title,
+                        //text: data.message,
+                        html: data.message,
+                        //showConfirmButton: false,
+                        //confirmButtonColor: '#3085d6',
+                    });
+                    if(data.type === "success"){
+                        document.getElementById(data.id).classList.add('fondo-favoritos');
+                    }/*else{
+                        document.getElementById(data.id).classList.remove('fondo-favoritos');
+                    }*/
 
                 }
             });

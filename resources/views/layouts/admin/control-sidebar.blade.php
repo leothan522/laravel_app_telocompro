@@ -23,8 +23,13 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('android.carrito', Auth::user()->id) }}" class="nav-link" target="_blank">
+                <i class="fa fa-shopping-cart"></i> Carrito
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('android.no_definida', Auth::user()->id) }}" class="nav-link" target="_blank">
-                <i class="fa fa-store-alt"></i> No Definida
+                <i class="fa fa-ban"></i> No Definida
             </a>
         </li>
         <li class="dropdown-divider"></li>
