@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Android;
 
 use App\Http\Controllers\Controller;
+use App\Models\Parametro;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -34,7 +35,11 @@ class AppController extends Controller
 
     public function shopCheckout()
     {
-        //dd
+        $parametros = Parametro::where('nombre', 'carrito')->where('tabla_id', Auth::user()->id)->get();
+        foreach ($parametros as $parametro){
+            $parametro->delete();
+        }
+        verSweetAlert2('Carrito Vacio', 'android', 'warning');
         return view('android.ogani.checkout');
     }
 
