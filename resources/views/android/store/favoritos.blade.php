@@ -13,19 +13,19 @@
                                 <div class="latest-product__slider owl-carousel">
                                     @php($primero = [])
                                     @foreach ($favoritos as $parametro)
-                                        @if ($parametro->productos->precio <= 0 || !$parametro->productos->estado)
+                                        @if ($parametro->precio < 0 || !$parametro->estado)
                                             @continue(true)
                                         @endif
-                                        @if ($parametro->productos->cant_inventario)
-                                            @if ($parametro->productos->visibilidad && $parametro->productos->descuento)
+                                        @if ($parametro->cant_inventario)
+                                            @if ($parametro->visibilidad && $parametro->descuento)
                                                 @php($precio = '
-                                                    <span>$'.formatoMillares($parametro->productos->precio - $parametro->productos->descuento).'</span>
-                                                    <span>'.precioBolivares($parametro->productos->precio - $parametro->productos->descuento).'</span>
+                                                    <span>$'.formatoMillares($parametro->precio - $parametro->descuento).'</span>
+                                                    <span>'.precioBolivares($parametro->precio - $parametro->descuento).'</span>
                                                 ')
                                             @else
                                                 @php($precio = '
-                                                    <span>$'.formatoMillares($parametro->productos->precio).'</span>
-                                                    <span>'.precioBolivares($parametro->productos->precio).'</span>
+                                                    <span>$'.formatoMillares($parametro->precio).'</span>
+                                                    <span>'.precioBolivares($parametro->precio).'</span>
                                                 ')
                                             @endif
                                         @else
@@ -35,24 +35,24 @@
                                         @endif
                                         @if (true /*$i <= 3*/)
                                             @php($primero[$i] = '
-                                                <a href="'.route('android.detalles', [Auth::user()->id, $parametro->productos->id]).'" class="latest-product__item">
+                                                <a href="'.route('android.detalles', [Auth::user()->id, $parametro->valor]).'" class="latest-product__item">
                                                     <div class="latest-product__item__pic img-thumbnail">
-                                                        <img src="'.asset('img/productos/'.$parametro->productos->file_path.'/'.$parametro->productos->imagen).'" style="width:110px !important;" alt="">
+                                                        <img src="'.asset('img/productos/'.$parametro->file_path.'/'.$parametro->imagen).'" style="width:110px !important;" alt="">
                                                     </div>
                                                     <div class="latest-product__item__text">
-                                                        <h6>'.ucwords($parametro->productos->nombre).'</h6>
+                                                        <h6>'.ucwords($parametro->nombre_producto).'</h6>
                                                         '.$precio.'
                                                     </div>
                                                 </a>
                                             ')
                                         {{--@else
                                             @php($segundo[$i] = '
-                                                <a href="'.route('android.detalles', [Auth::user()->id, $parametro->productos->id]).'" class="latest-product__item">
+                                                <a href="'.route('android.detalles', [Auth::user()->id, $parametro->id]).'" class="latest-product__item">
                                                     <div class="latest-product__item__pic img-thumbnail">
-                                                        <img src="'.asset('img/productos/'.$parametro->productos->file_path.'/'.$parametro->productos->imagen).'" style="width:110px !important;" alt="">
+                                                        <img src="'.asset('img/productos/'.$parametro->file_path.'/'.$parametro->imagen).'" style="width:110px !important;" alt="">
                                                     </div>
                                                     <div class="latest-product__item__text">
-                                                        <h6>'.ucwords($parametro->productos->nombre).'</h6>
+                                                        <h6>'.ucwords($parametro->nombre).'</h6>
                                                         '.$precio.'
                                                     </div>
                                                 </a>

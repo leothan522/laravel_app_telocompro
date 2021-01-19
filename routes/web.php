@@ -70,6 +70,7 @@ Route::middleware('android')->prefix('/android')->group(function (){
     //Rutas AJAX
     Route::post('/ajax/favoritos', 'Android\StoreController@ajaxFavoritos')->name('ajax.favoritos');
     Route::post('/ajax/carrito', 'Android\StoreController@ajaxCarrito')->name('ajax.carrito');
+    Route::post('/ajax/remover', 'Android\StoreController@ajaxRemover')->name('ajax.remover');
 
 
 });

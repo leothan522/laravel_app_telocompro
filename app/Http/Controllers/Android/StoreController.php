@@ -9,6 +9,7 @@ use App\Models\Parametro;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class StoreController extends Controller
@@ -118,6 +119,17 @@ class StoreController extends Controller
         $autenticar = new AppController();
         $autenticar->autenticar($id);
         $favoritos = Parametro::where('nombre', 'favoritos')->where('tabla_id', Auth::user()->id)->get();
+        $favoritos->each(function ($parametro){
+            $producto = Producto::find($parametro->valor);
+            $parametro->precio = $producto->precio;
+            $parametro->estado = $producto->estado;
+            $parametro->cant_inventario = $producto->cant_inventario;
+            $parametro->visibilidad = $producto->visibilidad;
+            $parametro->descuento = $producto->descuento;
+            $parametro->file_path = $producto->file_path;
+            $parametro->imagen = $producto->imagen;
+            $parametro->nombre_producto = $producto->nombre;
+        });
         return view('android.store.favoritos')
             ->with('favoritos', $favoritos)
             ->with('i', 1);
@@ -128,8 +140,43 @@ class StoreController extends Controller
         $autenticar = new AppController();
         $autenticar->autenticar($id);
         $carrito = Parametro::where('nombre', 'carrito')->where('tabla_id', Auth::user()->id)->get();
+        $agrupados = $carrito->groupBy('valor');
+        $agrupados->each(function ($parametro){
+            $i = 0;
+
+            foreach ($parametro as $producto){
+                $i++;
+                $parametro->valor = $producto->valor;
+                $producto = Producto::find($parametro->valor);
+                $parametro->precio = $producto->precio;
+                $parametro->estado = $producto->estado;
+                $parametro->cant_inventario = $producto->cant_inventario;
+                $parametro->visibilidad = $producto->visibilidad;
+                $parametro->descuento = $producto->descuento;
+                $parametro->file_path = $producto->file_path;
+                $parametro->imagen = $producto->imagen;
+                $parametro->nombre_producto = $producto->nombre;
+                //$parametro->i = $i;
+                break;
+            }
+            $parametro->cantidad = $parametro->count();
+            $parametro->subtotal = $parametro->cantidad * $parametro->precio;
+        });
+
+        //dd($agrupados->all());
+        /*$carrito->each(function ($parametro){
+            $producto = Producto::find($parametro->valor);
+            $parametro->precio = $producto->precio;
+            $parametro->estado = $producto->estado;
+            $parametro->cant_inventario = $producto->cant_inventario;
+            $parametro->visibilidad = $producto->visibilidad;
+            $parametro->descuento = $producto->descuento;
+            $parametro->file_path = $producto->file_path;
+            $parametro->imagen = $producto->imagen;
+            $parametro->nombre_producto = $producto->nombre;
+        });*/
         return view('android.store.carrito')
-            ->with('carrito', $carrito)
+            ->with('carrito', $agrupados)
             ->with('i', 1);
     }
 
@@ -185,6 +232,29 @@ class StoreController extends Controller
             $json['title'] = "Producto agotado";
             $json['message'] = "";
         }
+
+        return response()->json($json);
+    }
+
+    public function ajaxRemover(Request $request)
+    {
+        $json = array();
+        $id_usuario = Auth::user()->id;
+        $id_producto = $request->id_producto;
+        $total_actual = $request->total;
+        $json = ['type' => 'success', 'title' => '¡Removido!', 'message' => '', 'id' => "remover_$id_producto", 'clase' => "remover_$id_producto"];
+
+        $producto = Producto::find($id_producto);
+        $parametros = Parametro::where('nombre', 'carrito')->where('tabla_id', $id_usuario)->where('valor', $id_producto)->get();
+        $cantidad = $parametros->count();
+        $descontar = $cantidad * $producto->precio;
+        foreach ($parametros as $parametro){
+            $parametro->delete();
+        }
+        $json['message'] = ucwords($producto->nombre);
+        $json['total'] = formatoMillares($total_actual - $descontar);
+        $json['content'] = $total_actual - $descontar;
+        $json['bs'] = precioBolivares($total_actual - $descontar);
 
         return response()->json($json);
     }

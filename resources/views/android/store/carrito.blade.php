@@ -66,27 +66,32 @@
                                     <span class="icon_close"></span>
                                 </td>
                             </tr>--}}
+                            @php($total = 0)
                             @foreach ($carrito as $parametro)
-                                <tr>
+                                <tr class="remover_{{ $parametro->valor }}">
                                     <td class="{{--shoping__cart__item--}}">
-                                        <img src="{{ asset('img/productos/'.$parametro->productos->file_path.'/t_'.$parametro->productos->imagen) }}" class="img-thumbnail" alt="">
-                                        <span>{{ ucwords($parametro->productos->nombre) }}</span>
-                                        <span style="font-size: 18px; color: #1c1c1c; font-weight: 700;">${{ $parametro->productos->precio }}</span>
+                                        <img src="{{ asset('img/productos/'.$parametro->file_path.'/t_'.$parametro->imagen) }}" class="img-thumbnail" alt="">
+                                        <span>{{ ucwords($parametro->nombre_producto) }}</span>
+                                        <span style="font-size: 18px; color: #1c1c1c; font-weight: 700;">${{ $parametro->precio }}</span>
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input type="text" value="1">
+                                                <input type="text" value="{{ $parametro->cantidad }}">
                                             </div>
                                         </div>
                                     </td>
                                     <td class="shoping__cart__total">
-                                        ${{ $parametro->productos->precio }}
+                                        ${{ formatoMillares($parametro->subtotal) }}
                                     </td>
                                     <td class="shoping__cart__item__close">
-                                        <a href="#"><span class="icon_close"></span></a>
+                                        <a href="#" id="remover_{{ $parametro->valor }}" content="{{ $parametro->valor }}"
+                                           class="btn_remover {{--@if ($producto->carrito) fondo-favoritos @endif--}}">
+                                            <span class="icon_close"></span>
+                                        </a>
                                     </td>
                                 </tr>
+                                @php($total = $total + $parametro->subtotal)
                             @endforeach
                             {{--<tr>
                                 <td class="--}}{{--shoping__cart__item--}}{{--">
@@ -145,8 +150,8 @@
                     <div class="shoping__checkout">
                         <h5>Total</h5>
                         <ul>
-                            <li><i class="fa fa-dollar"></i> <span>$454.98</span></li>
-                            <li>Bs. <span>{{ precioBolivares(454.98) }}</span></li>
+                            <li><i class="fa fa-dollar"></i> <span id="total_dolar" content="{{ $total }}">${{ formatoMillares($total) }}</span></li>
+                            <li>Bs. <span id="total_bs">{{ precioBolivares($total) }}</span></li>
                         </ul>
                         <a href="{{ route('android.shop_checkout') }}" class="primary-btn">PROCEDER A PAGAR</a>
                     </div>
@@ -190,4 +195,67 @@
         <!-- Hero Section End -->
     @endif
 
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(".btn_remover").click(function(e){
+            e.preventDefault();
+            Swal.fire({
+                toast: true,
+                //title: 'Cargando...',
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                showConfirmButton: false,
+            });
+            var span = document.getElementById('total_dolar');
+            var span_bs = document.getElementById('total_bs');
+            var total_actual = span.getAttribute('content');
+            var producto = this.getAttribute('content');
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('ajax.remover') }}",
+                data: {id_producto:producto, total:total_actual},
+                success: function (data) {
+                    if(data.content === 0){
+                        window.location = "{{ route('android.carrito', Auth::user()->id) }}";
+                    }else{
+
+                        Swal.fire({
+                            //toast: true,
+                            icon: data.type,
+                            title: data.title,
+                            //text: data.message,
+                            html: data.message,
+                            //showConfirmButton: false,
+                            //confirmButtonColor: '#3085d6',
+                        });
+                        span.setAttribute('content', data.content);
+                        $(span).html('$' + data.total);
+                        $(span_bs).html(data.bs);
+                        var oferta = document.getElementsByClassName(data.clase);
+                        if (oferta) {
+                            for (var i = 0; i < oferta.length; i++) {
+                                //oferta[i].classList.add('fondo-favoritos');
+                                oferta[i].remove();
+                            }
+                        }
+                        //window.location = "{{ route('android.carrito', Auth::user()->id) }}"
+                        //document.getElementById(data.id).classList.add('fondo-favoritos');
+                    }
+
+                }
+            });
+        });
+
+    </script>
 @endsection
