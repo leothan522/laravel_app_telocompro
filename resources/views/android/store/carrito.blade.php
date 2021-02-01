@@ -72,17 +72,17 @@
                                     <td class="{{--shoping__cart__item--}}">
                                         <img src="{{ asset('img/productos/'.$parametro->file_path.'/t_'.$parametro->imagen) }}" class="img-thumbnail" alt="">
                                         <span>{{ ucwords($parametro->nombre_producto) }}</span>
-                                        <span style="font-size: 18px; color: #1c1c1c; font-weight: 700;">${{ $parametro->precio }}</span>
+                                        <span style="font-size: 18px; color: #1c1c1c; font-weight: 700;">${{ formatoMillares($parametro->precio) }}</span>
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input type="text" value="{{ $parametro->cantidad }}">
+                                                <input type="text" id="valor_{{ $parametro->valor }}" content="{{ $parametro->precio }}" value="{{ $parametro->cantidad }}">
                                             </div>
                                         </div>
                                     </td>
                                     <td class="shoping__cart__total">
-                                        ${{ formatoMillares($parametro->subtotal) }}
+                                        $<span>{{ formatoMillares($parametro->subtotal) }}</span>
                                     </td>
                                     <td class="shoping__cart__item__close">
                                         <a href="#" id="remover_{{ $parametro->valor }}" content="{{ $parametro->valor }}"

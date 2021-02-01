@@ -209,14 +209,25 @@
     proQty.on('click', '.qtybtn', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
+        var precio = $button.parent().find('input').attr("content");
         if ($button.hasClass('inc')) {
             var newVal = parseFloat(oldValue) + 1;
+            //incrementa
+
+
+
         } else {
             // Don't allow decrementing below zero
-            if (oldValue > 0) {
+            //if (oldValue > 0) {
+            if (oldValue > 1) {
                 var newVal = parseFloat(oldValue) - 1;
+                //reduce
+
+
+
             } else {
-                newVal = 0;
+                //newVal = 0;
+                newVal = 1;
             }
         }
         $button.parent().find('input').val(newVal);
