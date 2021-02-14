@@ -55,7 +55,7 @@ Route::middleware('android')->prefix('/android')->group(function (){
     Route::get('/shop/home/', 'Android\AppController@shopHome')->name('android.shop_Home');
 
     // Rutas APP
-    Route::get('/ruta/no/definida', function () {
+    Route::get('/ruta/no/definida/{id?}', function () {
         return view('android.prueba');
     })->name('android.no_definida');
     //Principales
