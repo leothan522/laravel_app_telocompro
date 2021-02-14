@@ -3,7 +3,14 @@
 
 @section('content')
 
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+
+
+
+    <div class="row justify-content-center">
+        <img src="{{ asset('img/store/en_construcccion.jpg') }}" class="img-thumbnail col-10">
+    </div>
+
+    {{--<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="{{ asset('adminlte/dist/img/prod-1.jpg') }}" class="img-thumbnail" alt="...">
@@ -23,20 +30,20 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-    </div>
+    </div>--}}
 
 
-    <div class="col-12 product-image-thumbs">
+    {{--<div class="col-12 product-image-thumbs">
         <div class="product-image-thumb active"><img src="{{ asset('adminlte/dist/img/prod-1.jpg') }}" alt="Product Image"></div>
         <div class="product-image-thumb"><img src="{{ asset('adminlte/dist/img/prod-2.jpg') }}" alt="Product Image"></div>
         <div class="product-image-thumb"><img src="{{ asset('adminlte/dist/img/prod-3.jpg') }}" alt="Product Image"></div>
         <!-- <div class="product-image-thumb"><img src="adminlte/img/prod-4.jpg" alt="Product Image"></div>
          <div class="product-image-thumb"><img src="adminlte/img/prod-5.jpg" alt="Product Image"></div>-->
-    </div>
+    </div>--}}
 
     <br>
 
-    <div class="col-12 col-sm-6 col-md-3">
+    {{--<div class="col-12 col-sm-6 col-md-3">
         <div class="info-box">
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
@@ -94,9 +101,11 @@
         </div>
         <!-- /.info-box -->
     </div>
-    <!-- /.col -->
+    <!-- /.col -->--}}
 
-    <div class="card-body">
+    <br>
+
+    {{--<div class="card-body">
         <p>Add the classes <code>.btn.btn-app</code> to an <code>&lt;a&gt;</code> tag to achieve the following:</p>
         <a class="btn btn-app">
             <i class="fas fa-edit"></i> Edit
@@ -134,16 +143,16 @@
             <span class="badge bg-danger">531</span>
             <i class="fas fa-heart"></i> Likes
         </a>
-    </div>
+    </div>--}}
 
-    <input type="button" value="Say hello" onClick="showAndroidToast('Hello Android!')" />
+    {{--<input type="button" value="Say hello" onClick="showAndroidToast('Hello Android!')" />
 
     <script type="text/javascript">
         function showAndroidToast(toast) {
-           
+
 			Android.showToast(toast);
         }
-    </script>
+    </script>--}}
 
 
 @endsection
